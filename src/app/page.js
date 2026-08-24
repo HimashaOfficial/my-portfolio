@@ -259,9 +259,9 @@ export default function Home() {
               </span>
             </h1>
 
-            {/* Optimized Description line lengths across screens */}
+            {/* Updated Description with Video Editing Included */}
             <p className="text-neutral-400 text-sm sm:text-base md:text-base lg:text-lg mb-8 leading-relaxed w-full max-w-xl md:max-w-2xl lg:max-w-2xl mx-auto lg:mx-0">
-              Founder of <strong className="text-white">Virtmex</strong> and <strong className="text-white">VarixWare</strong>. Combining software engineering, WordPress development, and graphic design with AI-driven workflows to craft powerful digital solutions.
+              Founder of <strong className="text-white">Virtmex</strong> and <strong className="text-white">VarixWare</strong>. Combining software engineering, WordPress development, graphic design, and video editing with AI-driven workflows to craft powerful digital solutions.
             </p>
 
             {/* Perfectly Sized & Equalized Buttons for All Devices */}
