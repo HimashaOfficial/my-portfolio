@@ -20,7 +20,8 @@ import {
   GraduationCap,
   ExternalLink,
   Layers,
-  MessageSquare
+  MessageSquare,
+  Loader2
 } from "lucide-react";
 
 const fadeInUp = {
@@ -47,9 +48,19 @@ const navItems = [
 ];
 
 export default function Home() {
-  const [submitted, setSubmitted] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Form States connected to Resend Backend API
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    message: ""
+  });
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Auto detect active section on scroll
   useEffect(() => {
@@ -74,10 +85,41 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleSubmit = (e) => {
+  // Form Input Change Handler
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Backend API Call on Submit
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 4000);
+    setLoading(true);
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setSubmitted(true);
+        setFormData({ name: "", email: "", mobile: "", message: "" });
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        setErrorMessage("Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Fixed mobile navigation handler
@@ -205,10 +247,10 @@ export default function Home() {
             </span>
             
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold mb-4 text-white tracking-tight leading-tight">
-              Hi, I'm <br className="sm:hidden" />
+              Hi, I'm <br />
               <span className="bg-gradient-to-r from-white via-neutral-200 to-neutral-500 bg-clip-text text-transparent">
-                Himasha Keshana Rathnayaka
-              </span> 👋
+                Himasha Keshana Rathnayaka 👋
+              </span>
             </h1>
             
             <p className="text-neutral-400 text-base md:text-lg mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
@@ -530,7 +572,7 @@ export default function Home() {
               className="bg-neutral-950 border border-neutral-800/80 rounded-2xl overflow-hidden hover:border-neutral-700 transition duration-300 flex flex-col justify-between group"
             >
               <div>
-                {/* Full Bleed Image Banner (No Margins, Fits Top Completely) */}
+                {/* Full Bleed Image Banner */}
                 <div className="w-full h-56 overflow-hidden relative border-b border-neutral-800/60">
                   <img 
                     src="/projects/lopez tours.png" 
@@ -597,7 +639,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Compact High-Density Contact Section (No-Scroll Viewport Friendly) */}
+      {/* Contact Section */}
       <section id="contact" className="w-full min-h-screen flex flex-col justify-center py-16 px-6 md:px-16 border-t border-neutral-900">
         <div className="w-full max-w-6xl mx-auto">
           <motion.div 
@@ -613,7 +655,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             
-            {/* Left: Interactive Form (7 Columns) */}
+            {/* Left: Connected Contact Form */}
             <motion.form 
               initial="hidden"
               whileInView="visible"
@@ -629,6 +671,9 @@ export default function Home() {
                   <label className="block text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-1">Your Name</label>
                   <input 
                     type="text" 
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     required 
                     placeholder="Enter your name" 
                     className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-3.5 py-2.5 text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-500 transition text-xs md:text-sm"
@@ -640,6 +685,9 @@ export default function Home() {
                     <label className="block text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-1">Your Email</label>
                     <input 
                       type="email" 
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
                       required 
                       placeholder="name@example.com" 
                       className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-3.5 py-2.5 text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-500 transition text-xs md:text-sm"
@@ -650,6 +698,9 @@ export default function Home() {
                     <label className="block text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-1">Mobile Number</label>
                     <input 
                       type="tel" 
+                      name="mobile"
+                      value={formData.mobile}
+                      onChange={handleChange}
                       placeholder="+94 75 043 4734" 
                       className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-3.5 py-2.5 text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-500 transition text-xs md:text-sm"
                     />
@@ -660,18 +711,28 @@ export default function Home() {
                   <label className="block text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-1">Message</label>
                   <textarea 
                     rows="3" 
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
                     required 
                     placeholder="Write your message here..." 
                     className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-3.5 py-2.5 text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-500 transition text-xs md:text-sm resize-none"
                   ></textarea>
                 </div>
+
+                {errorMessage && (
+                  <p className="text-red-500 text-xs mt-1">{errorMessage}</p>
+                )}
               </div>
 
               <button 
                 type="submit" 
-                className="w-full mt-4 py-3 bg-white hover:bg-neutral-200 text-black font-semibold rounded-lg transition flex items-center justify-center gap-2 text-xs md:text-sm"
+                disabled={loading}
+                className="w-full mt-4 py-3 bg-white hover:bg-neutral-200 text-black font-semibold rounded-lg transition flex items-center justify-center gap-2 text-xs md:text-sm disabled:opacity-50"
               >
-                {submitted ? (
+                {loading ? (
+                  <span className="flex items-center gap-2 text-black"><Loader2 size={16} className="animate-spin" /> Sending...</span>
+                ) : submitted ? (
                   <span className="flex items-center gap-2 text-green-700"><CheckCircle2 size={16} /> Message Sent!</span>
                 ) : (
                   <span className="flex items-center gap-2"><Mail size={16} /> Send Message</span>
@@ -679,7 +740,7 @@ export default function Home() {
               </button>
             </motion.form>
 
-            {/* Right: Height-Balanced Cards (5 Columns) */}
+            {/* Right: Social & Contact Cards */}
             <motion.div 
               initial="hidden"
               whileInView="visible"
