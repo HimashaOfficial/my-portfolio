@@ -249,8 +249,9 @@ export default function Home() {
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold mb-4 text-white tracking-tight leading-tight">
               Hi, I'm <br />
               <span className="bg-gradient-to-r from-white via-neutral-200 to-neutral-500 bg-clip-text text-transparent">
-                Himasha Keshana Rathnayaka 👋
+                Himasha Keshana Rathnayaka
               </span>
+              <span className="inline-block ml-2">👋</span>
             </h1>
             
             <p className="text-neutral-400 text-base md:text-lg mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
