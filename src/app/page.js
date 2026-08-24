@@ -693,10 +693,9 @@ export default function Home() {
                   <h3 className="text-sm font-bold text-white mb-1 flex items-center gap-2">
                     <Send size={16} className="text-green-500" /> Direct WhatsApp
                   </h3>
-                  <p className="text-neutral-400 text-xs leading-relaxed mb-1">Need a faster response? Reach out directly via WhatsApp.</p>
-                  <p className="text-neutral-300 font-mono text-xs">+94 75 043 4734</p>
+                  <p className="text-neutral-400 text-xs leading-relaxed mb-3">Need a faster response? Reach out directly via WhatsApp.</p>
                 </div>
-                <div className="mt-3">
+                <div>
                   <a 
                     href="https://wa.me/94750434734" 
                     target="_blank" 
