@@ -80,14 +80,25 @@ export default function Home() {
     setTimeout(() => setSubmitted(false), 4000);
   };
 
-  // Mobile nav click handler for accurate smooth scrolling
+  // Fixed mobile navigation handler
   const handleMobileNavClick = (e, href) => {
     e.preventDefault();
-    setMobileMenuOpen(false);
     const targetId = href.substring(1);
     const targetElement = document.getElementById(targetId);
+
+    setMobileMenuOpen(false);
+
     if (targetElement) {
-      targetElement.scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => {
+        const navHeight = 80; // Fixed navbar height offset
+        const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - navHeight;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }, 150);
     }
   };
 
@@ -159,17 +170,17 @@ export default function Home() {
                   const isActive = activeSection === id;
                   return (
                     <li key={item.name}>
-                      <a
-                        href={item.href}
+                      <button
+                        type="button"
                         onClick={(e) => handleMobileNavClick(e, item.href)}
-                        className={`block px-4 py-2.5 rounded-lg text-sm transition ${
+                        className={`w-full text-left block px-4 py-2.5 rounded-lg text-sm transition ${
                           isActive 
                             ? "bg-white text-black font-semibold" 
                             : "text-neutral-400 hover:text-white hover:bg-neutral-900"
                         }`}
                       >
                         {item.name}
-                      </a>
+                      </button>
                     </li>
                   );
                 })}
