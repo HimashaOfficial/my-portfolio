@@ -232,21 +232,38 @@ export default function Home() {
         </AnimatePresence>
       </nav>
 
-      {/* Hero Section - Optimized Mobile Viewport Heights */}
-      <section id="hero" className="w-full min-h-[100dvh] lg:min-h-screen flex flex-col justify-center items-center pt-20 pb-6 md:pt-28 md:pb-12 px-5 md:px-16">
+      {/* Hero Section */}
+      <section id="hero" className="w-full min-h-screen flex flex-col justify-center items-center pt-20 pb-8 md:pt-28 md:pb-12 px-6 md:px-16">
         <motion.div 
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
-          className="w-full max-w-6xl mx-auto flex flex-col-reverse lg:grid lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-12 items-center"
+          className="w-full max-w-6xl mx-auto flex flex-col lg:grid lg:grid-cols-12 gap-5 lg:gap-12 items-center"
         >
-          {/* Text Block */}
-          <div className="lg:col-span-7 text-center lg:text-left flex flex-col items-center lg:items-start">
-            <span className="inline-block px-3 py-1 bg-neutral-900/90 text-neutral-300 border border-neutral-800 rounded-full text-[11px] sm:text-xs font-medium tracking-wider uppercase mb-3 sm:mb-5">
+          {/* Top Image Block on Mobile */}
+          <div className="lg:col-span-5 lg:order-2 flex justify-center items-center relative w-full">
+            <div className="relative w-52 h-52 sm:w-72 sm:h-72 md:w-[360px] md:h-[360px] lg:w-[420px] lg:h-[420px]">
+              {/* Outer Subtle Ambient Glow */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-neutral-800 via-neutral-600 to-white/20 blur-xl md:blur-2xl opacity-40 animate-pulse" />
+              
+              {/* Ellipse Container */}
+              <div className="relative w-full h-full rounded-full p-1.5 bg-gradient-to-b from-neutral-700 via-neutral-900 to-black border border-neutral-800 shadow-2xl overflow-hidden flex items-center justify-center">
+                <img 
+                  src="/projects/myimage.png" 
+                  alt="Himasha Keshana Rathnayaka" 
+                  className="w-full h-full object-cover rounded-full hover:scale-105 transition duration-500"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Text Block below image on Mobile */}
+          <div className="lg:col-span-7 lg:order-1 text-center lg:text-left flex flex-col items-center lg:items-start">
+            <span className="inline-block px-4 py-1 bg-neutral-900/90 text-neutral-300 border border-neutral-800 rounded-full text-xs font-medium tracking-wider uppercase mb-3 md:mb-5">
               Digital Creator & Developer
             </span>
             
-            <h1 className="text-2xl sm:text-4xl md:text-6xl font-extrabold mb-2 sm:mb-4 text-white tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold mb-3 md:mb-4 text-white tracking-tight leading-tight">
               Hi, I'm <br className="hidden sm:inline" />
               <span className="bg-gradient-to-r from-white via-neutral-200 to-neutral-500 bg-clip-text text-transparent">
                 Himasha Keshana
@@ -255,38 +272,21 @@ export default function Home() {
                 <span className="bg-gradient-to-r from-neutral-200 to-neutral-500 bg-clip-text text-transparent">
                   Rathnayaka
                 </span>
-                <span className="inline-block ml-1 sm:ml-2 text-xl sm:text-4xl md:text-5xl">👋</span>
+                <span className="inline-block ml-1 md:ml-2 text-2xl sm:text-4xl md:text-5xl">👋</span>
               </span>
             </h1>
             
-            <p className="text-neutral-400 text-xs sm:text-base md:text-lg mb-5 sm:mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+            <p className="text-neutral-400 text-sm md:text-lg mb-5 md:mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
               Founder of <strong className="text-white">Virtmex</strong> and <strong className="text-white">VarixWare</strong>. Combining software engineering, WordPress development, and graphic design with AI-driven workflows to craft powerful digital solutions.
             </p>
             
-            <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-2.5 sm:gap-4 w-full sm:w-auto">
-              <a href="#projects" className="px-6 py-2.5 sm:px-7 sm:py-3 bg-white hover:bg-neutral-200 text-black font-semibold rounded-lg transition flex items-center justify-center gap-2 text-xs sm:text-sm w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 md:gap-4 w-full sm:w-auto">
+              <a href="#projects" className="px-7 py-3 bg-white hover:bg-neutral-200 text-black font-semibold rounded-lg transition flex items-center justify-center gap-2 text-sm w-full sm:w-auto">
                 View Work <ArrowUpRight size={16} />
               </a>
-              <a href="#contact" className="px-6 py-2.5 sm:px-7 sm:py-3 border border-neutral-800 hover:bg-neutral-900 text-neutral-300 font-medium rounded-lg transition text-xs sm:text-sm w-full sm:w-auto text-center">
+              <a href="#contact" className="px-7 py-3 border border-neutral-800 hover:bg-neutral-900 text-neutral-300 font-medium rounded-lg transition text-sm w-full sm:w-auto text-center">
                 Get In Touch
               </a>
-            </div>
-          </div>
-
-          {/* Profile Image - Scaled Down on Mobile */}
-          <div className="lg:col-span-5 flex justify-center items-center relative w-full mb-1 sm:mb-0">
-            <div className="relative w-36 h-36 sm:w-64 sm:h-64 md:w-[360px] md:h-[360px] lg:w-[420px] lg:h-[420px]">
-              {/* Outer Glow */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-neutral-800 via-neutral-600 to-white/20 blur-xl sm:blur-2xl opacity-40 animate-pulse" />
-              
-              {/* Ellipse Container */}
-              <div className="relative w-full h-full rounded-full p-1 sm:p-1.5 bg-gradient-to-b from-neutral-700 via-neutral-900 to-black border border-neutral-800 shadow-2xl overflow-hidden flex items-center justify-center">
-                <img 
-                  src="/projects/myimage.png" 
-                  alt="Himasha Keshana Rathnayaka" 
-                  className="w-full h-full object-cover rounded-full hover:scale-105 transition duration-500"
-                />
-              </div>
             </div>
           </div>
         </motion.div>
