@@ -291,27 +291,34 @@ export default function Home() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUp}
-          className="w-full max-w-6xl mx-auto text-center"
+          className="w-full max-w-4xl mx-auto"
         >
-          <div className="mb-12 md:mb-16">
+          {/* Section Header */}
+          <div className="text-center mb-10 md:mb-12">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3 inline-flex items-center gap-2.5">
               <UserCheck className="text-neutral-400" size={28} /> About Me
             </h2>
-            <p className="text-neutral-400 text-sm sm:text-base">Background, leadership, and digital expertise.</p>
-          </div>
-
-          <div className="space-y-4 text-neutral-300 leading-relaxed text-sm sm:text-base max-w-3xl mx-auto text-left sm:text-center">
-            <p>
-              I am an Information Technology student, Digital Creator, and the Founder/Owner of <strong className="text-white">Virtmex</strong> and <strong className="text-white">VarixWare</strong>. My expertise covers web engineering, custom software solutions, app development, and creative digital media.
-            </p>
-            <p>
-              Through my brands, I focus on delivering scalable digital products, tailored web design, and high-impact media solutions. By combining modern coding principles with graphic design and AI productivity tools, I bring a structured, end-to-end perspective to every venture.
+            <p className="text-neutral-400 text-sm sm:text-base max-w-lg mx-auto">
+              Background, leadership, and digital expertise.
             </p>
           </div>
 
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto text-left">
+          {/* Clean & Balanced Bio Text */}
+          <div className="bg-neutral-950 border border-neutral-800/80 rounded-2xl p-6 sm:p-8 md:p-10 space-y-5 text-neutral-300 text-sm sm:text-base leading-relaxed text-left sm:text-center max-w-3xl mx-auto shadow-xl">
+            <p className="tracking-normal">
+              I am an <strong className="text-white">Information Technology student</strong>, Digital Creator, and the Founder of <strong className="text-white">Virtmex</strong> and <strong className="text-white">VarixWare</strong>. My focus spans web engineering, custom software solutions, app development, and high-impact digital media.
+            </p>
+            <p className="tracking-normal text-neutral-400">
+              By combining modern software architecture with intuitive UI design and AI-driven workflows, I craft scalable products tailored to solve real-world challenges with precision and speed.
+            </p>
+          </div>
+
+          {/* Brand Cards */}
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
             <div className="p-5 bg-neutral-950 border border-neutral-800 rounded-xl flex items-center gap-4 hover:border-neutral-700 transition">
-              <Briefcase className="text-white shrink-0" size={24} />
+              <div className="w-10 h-10 bg-neutral-900 border border-neutral-800 rounded-lg flex items-center justify-center shrink-0">
+                <Briefcase className="text-white" size={20} />
+              </div>
               <div>
                 <h3 className="text-white font-bold text-base">Virtmex</h3>
                 <p className="text-xs text-neutral-400">Founder & Managing Brand Lead</p>
@@ -319,7 +326,9 @@ export default function Home() {
             </div>
 
             <div className="p-5 bg-neutral-950 border border-neutral-800 rounded-xl flex items-center gap-4 hover:border-neutral-700 transition">
-              <Briefcase className="text-white shrink-0" size={24} />
+              <div className="w-10 h-10 bg-neutral-900 border border-neutral-800 rounded-lg flex items-center justify-center shrink-0">
+                <Briefcase className="text-white" size={20} />
+              </div>
               <div>
                 <h3 className="text-white font-bold text-base">VarixWare</h3>
                 <p className="text-xs text-neutral-400">Founder & Development Lead</p>
