@@ -245,7 +245,7 @@ export default function Home() {
             <span className="inline-block px-4 py-1.5 bg-neutral-900/90 text-neutral-300 border border-neutral-800 rounded-full text-xs font-medium tracking-wider uppercase mb-5">
               Digital Creator & Developer
             </span>
-            
+
             <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold mb-4 text-white tracking-tight leading-tight w-full">
               Hi, I'm <br className="hidden sm:inline" />
               <span className="bg-gradient-to-r from-white via-neutral-200 to-neutral-500 bg-clip-text text-transparent">
@@ -258,16 +258,18 @@ export default function Home() {
                 <span className="inline-block ml-2 text-2xl sm:text-4xl md:text-5xl">👋</span>
               </span>
             </h1>
-            
-            <p className="text-neutral-400 text-sm sm:text-base md:text-lg lg:text-lg mb-8 leading-relaxed w-full max-w-2xl md:max-w-3xl lg:max-w-2xl mx-auto lg:mx-0">
+
+            {/* Optimized Description line lengths across screens */}
+            <p className="text-neutral-400 text-sm sm:text-base md:text-base lg:text-lg mb-8 leading-relaxed w-full max-w-xl md:max-w-2xl lg:max-w-2xl mx-auto lg:mx-0">
               Founder of <strong className="text-white">Virtmex</strong> and <strong className="text-white">VarixWare</strong>. Combining software engineering, WordPress development, and graphic design with AI-driven workflows to craft powerful digital solutions.
             </p>
-            
+
+            {/* Perfectly Sized & Equalized Buttons for All Devices */}
             <div className="grid grid-cols-2 sm:flex sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4 w-full sm:w-auto">
-              <a href="#projects" className="px-5 sm:px-7 py-3 bg-white hover:bg-neutral-200 text-black font-semibold rounded-lg transition flex items-center justify-center gap-2 text-xs sm:text-sm w-full sm:w-auto">
+              <a href="#projects" className="h-12 px-6 bg-white hover:bg-neutral-200 text-black font-semibold rounded-lg transition flex items-center justify-center gap-2 text-xs sm:text-sm w-full sm:w-auto">
                 View Work <ArrowUpRight size={16} />
               </a>
-              <a href="#contact" className="px-5 sm:px-7 py-3 border border-neutral-800 hover:bg-neutral-900 text-neutral-300 font-medium rounded-lg transition text-xs sm:text-sm w-full sm:w-auto text-center flex items-center justify-center">
+              <a href="#contact" className="h-12 px-6 border border-neutral-800 hover:bg-neutral-900 text-neutral-300 font-semibold rounded-lg transition text-xs sm:text-sm w-full sm:w-auto flex items-center justify-center">
                 Get In Touch
               </a>
             </div>
@@ -278,7 +280,7 @@ export default function Home() {
             <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-[320px] md:h-[320px] lg:w-[420px] lg:h-[420px]">
               {/* Outer Subtle Ambient Glow */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-neutral-800 via-neutral-600 to-white/20 blur-2xl opacity-40 animate-pulse" />
-              
+
               {/* Ellipse Container */}
               <div className="relative w-full h-full rounded-full p-1.5 bg-gradient-to-b from-neutral-700 via-neutral-900 to-black border border-neutral-800 shadow-2xl overflow-hidden flex items-center justify-center">
                 <img 
@@ -347,7 +349,7 @@ export default function Home() {
           </h2>
 
           <div className="relative border-l border-neutral-800 ml-4 pl-6 space-y-10">
-            
+
             {/* Degree - Reading */}
             <div className="relative group">
               <div className="absolute -left-[31px] top-1.5 w-3 h-3 bg-white rounded-full border-4 border-black" />
@@ -522,7 +524,7 @@ export default function Home() {
 
           {/* Software Projects Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            
+
             {/* Project 1: App Development (Drivers Help App) */}
             <motion.div 
               initial="hidden"
@@ -626,9 +628,9 @@ export default function Home() {
               <Palette size={14} className="text-neutral-400" />
               <span>Graphic Design & Video Editing Work</span>
             </div>
-            
+
             <h3 className="text-xl font-bold text-white mb-2">Looking for Creative Media & Design Portfolios?</h3>
-            
+
             <p className="text-neutral-400 text-xs md:text-sm max-w-2xl leading-relaxed mb-6">
               I have executed various custom brand graphic design packages, social media marketing assets, and video editing campaigns. Specific media work samples and project presentations are available upon direct request.
             </p>
@@ -659,7 +661,7 @@ export default function Home() {
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-            
+
             {/* Left: Connected Contact Form */}
             <motion.form 
               initial="hidden"
@@ -671,7 +673,7 @@ export default function Home() {
             >
               <div className="space-y-3">
                 <h3 className="text-lg font-bold text-white mb-1">Send a Message</h3>
-                
+
                 <div>
                   <label className="block text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-1">Your Name</label>
                   <input 
@@ -787,7 +789,7 @@ export default function Home() {
               {/* Social Media Grid Box */}
               <div className="p-5 bg-neutral-950 border border-neutral-800 rounded-2xl flex-1 flex flex-col justify-center">
                 <h3 className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider mb-2">Connect On Social Media</h3>
-                
+
                 <div className="grid grid-cols-2 gap-2">
                   <a href="https://www.linkedin.com/in/himasha-rathnayaka-4328493a8" target="_blank" rel="noopener noreferrer" className="p-2 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800/80 rounded-lg flex items-center gap-2 text-xs text-neutral-300 hover:text-white transition">
                     <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
