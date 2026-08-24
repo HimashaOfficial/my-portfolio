@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+html, body, #__next {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden !important;
+  background-color: #000000 !important;
+  scroll-behavior: smooth !important;
+}
+
+/* Force standard responsive layout without squishing content */
+section {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
