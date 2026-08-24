@@ -212,7 +212,7 @@ export default function Home() {
               {/* Ellipse Container */}
               <div className="relative w-full h-full rounded-full p-1.5 bg-gradient-to-b from-neutral-700 via-neutral-900 to-black border border-neutral-800 shadow-2xl overflow-hidden flex items-center justify-center">
                 <img 
-                  src="/projects/myimage.jpg" 
+                  src="/projects/myimage.png" 
                   alt="Himasha Keshana Rathnayaka" 
                   className="w-full h-full object-cover rounded-full hover:scale-105 transition duration-500"
                 />
