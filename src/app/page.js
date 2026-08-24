@@ -246,22 +246,22 @@ export default function Home() {
               Digital Creator & Developer
             </span>
 
-            {/* Complete Name changed to White Solid Color */}
-            <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold mb-4 text-white tracking-tight leading-tight w-full">
+            {/* Tightened Line Height for the Heading */}
+            <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold mb-4 text-white tracking-tight leading-[1.1] sm:leading-tight w-full">
               Hi, I'm <br className="hidden sm:inline" />
-              <span>Himasha Keshana</span>{" "}
+              <span className="inline-block mt-1 sm:mt-0">Himasha Keshana</span>{" "}
               <span className="inline-inline whitespace-nowrap">
                 <span>Rathnayaka</span>
                 <span className="inline-block ml-2 text-2xl sm:text-4xl md:text-5xl">👋</span>
               </span>
             </h1>
 
-            {/* Description with Video Editing */}
+            {/* Description */}
             <p className="text-neutral-400 text-sm sm:text-base md:text-base lg:text-lg mb-8 leading-relaxed w-full max-w-xl md:max-w-2xl lg:max-w-2xl mx-auto lg:mx-0">
               Founder of <strong className="text-white">Virtmex</strong> and <strong className="text-white">VarixWare</strong>. Combining software engineering, WordPress development, graphic design, and video editing with AI-driven workflows to craft powerful digital solutions.
             </p>
 
-            {/* Sized & Equalized Buttons */}
+            {/* Buttons */}
             <div className="grid grid-cols-2 sm:flex sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4 w-full sm:w-auto">
               <a href="#projects" className="h-12 px-6 bg-white hover:bg-neutral-200 text-black font-semibold rounded-lg transition flex items-center justify-center gap-2 text-xs sm:text-sm w-full sm:w-auto">
                 View Work <ArrowUpRight size={16} />
