@@ -298,12 +298,16 @@ export default function Home() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUp}
-          className="w-full max-w-4xl mx-auto"
+          className="w-full max-w-6xl mx-auto"
         >
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 flex items-center gap-3">
-            <UserCheck className="text-neutral-400" size={26} /> About Me
-          </h2>
-          <div className="space-y-4 text-neutral-400 leading-relaxed text-base md:text-lg">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 inline-flex items-center gap-3">
+              <UserCheck className="text-neutral-400" size={26} /> About Me
+            </h2>
+            <p className="text-neutral-400 text-sm md:text-base">Background, leadership, and digital expertise.</p>
+          </div>
+
+          <div className="space-y-4 text-neutral-400 leading-relaxed text-xs md:text-sm max-w-4xl mx-auto">
             <p>
               I am an Information Technology student, Digital Creator, and the Founder/Owner of <strong className="text-white">Virtmex</strong> and <strong className="text-white">VarixWare</strong>. My expertise covers web engineering, custom software solutions, app development, and creative digital media.
             </p>
@@ -312,19 +316,19 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
             <div className="p-5 bg-neutral-950 border border-neutral-800 rounded-xl flex items-center gap-4">
-              <Briefcase className="text-white shrink-0" size={24} />
+              <Briefcase className="text-white shrink-0" size={22} />
               <div>
-                <h3 className="text-white font-bold text-base">Virtmex</h3>
+                <h3 className="text-white font-bold text-sm md:text-base">Virtmex</h3>
                 <p className="text-xs text-neutral-400">Founder & Managing Brand Lead</p>
               </div>
             </div>
 
             <div className="p-5 bg-neutral-950 border border-neutral-800 rounded-xl flex items-center gap-4">
-              <Briefcase className="text-white shrink-0" size={24} />
+              <Briefcase className="text-white shrink-0" size={22} />
               <div>
-                <h3 className="text-white font-bold text-base">VarixWare</h3>
+                <h3 className="text-white font-bold text-sm md:text-base">VarixWare</h3>
                 <p className="text-xs text-neutral-400">Founder & Development Lead</p>
               </div>
             </div>
@@ -339,23 +343,26 @@ export default function Home() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUp}
-          className="w-full max-w-4xl mx-auto"
+          className="w-full max-w-6xl mx-auto"
         >
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-10 flex items-center gap-3">
-            <GraduationCap className="text-neutral-400" size={28} /> Education & Academic Qualifications
-          </h2>
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 inline-flex items-center gap-3">
+              <GraduationCap className="text-neutral-400" size={28} /> Education & Academic Qualifications
+            </h2>
+            <p className="text-neutral-400 text-sm md:text-base">Academic journey and technical certifications.</p>
+          </div>
 
-          <div className="relative border-l border-neutral-800 ml-4 pl-6 space-y-10">
+          <div className="relative border-l border-neutral-800 ml-4 md:ml-auto pl-6 space-y-8 max-w-4xl mx-auto">
 
             {/* Degree - Reading */}
             <div className="relative group">
               <div className="absolute -left-[31px] top-1.5 w-3 h-3 bg-white rounded-full border-4 border-black" />
               <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                <span className="text-xs font-semibold uppercase tracking-wider text-green-400 bg-green-950/60 border border-green-800/60 px-2.5 py-0.5 rounded-full">Present • Currently Reading</span>
+                <span className="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-green-400 bg-green-950/60 border border-green-800/60 px-2.5 py-0.5 rounded-full">Present • Currently Reading</span>
                 <span className="text-xs text-neutral-500 font-mono">UCSC</span>
               </div>
-              <h3 className="text-xl font-bold text-white mb-1">Bachelor of Information Technology (BIT)</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">
+              <h3 className="text-base md:text-lg font-bold text-white mb-1">Bachelor of Information Technology (BIT)</h3>
+              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">
                 University of Colombo School of Computing (UCSC)
               </p>
             </div>
@@ -364,11 +371,11 @@ export default function Home() {
             <div className="relative group">
               <div className="absolute -left-[31px] top-1.5 w-3 h-3 bg-neutral-600 rounded-full border-4 border-black" />
               <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">2024 - 2025</span>
+                <span className="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-neutral-400">2024 - 2025</span>
                 <span className="text-xs text-neutral-500 font-mono">UCSC</span>
               </div>
-              <h3 className="text-lg font-bold text-white mb-1">Foundation in Information Technology (FIT)</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">
+              <h3 className="text-base md:text-lg font-bold text-white mb-1">Foundation in Information Technology (FIT)</h3>
+              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">
                 University of Colombo School of Computing (UCSC) — Eligible for Entry into Bachelor of Information Technology (BIT)
               </p>
             </div>
@@ -377,11 +384,11 @@ export default function Home() {
             <div className="relative group">
               <div className="absolute -left-[31px] top-1.5 w-3 h-3 bg-neutral-600 rounded-full border-4 border-black" />
               <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">2024 - 2025</span>
+                <span className="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-neutral-400">2024 - 2025</span>
                 <span className="text-xs text-neutral-500 font-mono">IMBS Campus</span>
               </div>
-              <h3 className="text-lg font-bold text-white mb-1">Diploma in Information & Communication Technology</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">
+              <h3 className="text-base md:text-lg font-bold text-white mb-1">Diploma in Information & Communication Technology</h3>
+              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">
                 IMBS Green Campus (1 Year Program)
               </p>
             </div>
@@ -390,11 +397,11 @@ export default function Home() {
             <div className="relative group">
               <div className="absolute -left-[31px] top-1.5 w-3 h-3 bg-neutral-600 rounded-full border-4 border-black" />
               <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">2024</span>
+                <span className="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-neutral-400">2024</span>
                 <span className="text-xs text-neutral-500 font-mono">CPS Campus</span>
               </div>
-              <h3 className="text-lg font-bold text-white mb-1">Certificate in Graphic Designing</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">
+              <h3 className="text-base md:text-lg font-bold text-white mb-1">Certificate in Graphic Designing</h3>
+              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">
                 College of Professional Studies Campus
               </p>
             </div>
@@ -427,37 +434,37 @@ export default function Home() {
             <motion.div variants={fadeInUp} className="p-7 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-700 transition">
               <Code2 className="text-neutral-200 mb-4" size={28} />
               <h3 className="text-lg font-bold text-white mb-2">Software Development</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">Developing structured software logic, backend foundations, and custom application solutions.</p>
+              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Developing structured software logic, backend foundations, and custom application solutions.</p>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="p-7 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-700 transition">
               <Smartphone className="text-neutral-200 mb-4" size={28} />
               <h3 className="text-lg font-bold text-white mb-2">App Development</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">Building intuitive cross-platform mobile interfaces and functional application systems.</p>
+              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Building intuitive cross-platform mobile interfaces and functional application systems.</p>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="p-7 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-700 transition">
               <Globe className="text-neutral-200 mb-4" size={28} />
               <h3 className="text-lg font-bold text-white mb-2">WordPress Development</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">Customizing and managing WordPress architectures for business sites and content platforms.</p>
+              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Customizing and managing WordPress architectures for business sites and content platforms.</p>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="p-7 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-700 transition">
               <Palette className="text-neutral-200 mb-4" size={28} />
               <h3 className="text-lg font-bold text-white mb-2">Graphic Design</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">Designing social media banners, marketing graphics, brand assets, and user interface elements.</p>
+              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Designing social media banners, marketing graphics, brand assets, and user interface elements.</p>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="p-7 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-700 transition">
               <Video className="text-neutral-200 mb-4" size={28} />
               <h3 className="text-lg font-bold text-white mb-2">Video Editing</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">Editing promotional videos and social media content for targeted brand engagement.</p>
+              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Editing promotional videos and social media content for targeted brand engagement.</p>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="p-7 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-700 transition">
               <Cpu className="text-neutral-200 mb-4" size={28} />
               <h3 className="text-lg font-bold text-white mb-2">AI-Assisted Workflows</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">Leveraging generative AI productivity tools to streamline design, media, and coding processes.</p>
+              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Leveraging generative AI productivity tools to streamline design, media, and coding processes.</p>
             </motion.div>
           </motion.div>
         </div>
@@ -487,19 +494,19 @@ export default function Home() {
             <motion.div variants={fadeInUp} className="p-8 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-600 transition">
               <Code2 className="text-neutral-200 mb-4" size={32} />
               <h3 className="text-xl font-bold text-white mb-2">Software & App Solutions</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">Custom software tools, functional web platforms, and user-friendly mobile application builds.</p>
+              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Custom software tools, functional web platforms, and user-friendly mobile application builds.</p>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="p-8 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-600 transition">
               <Globe className="text-neutral-200 mb-4" size={32} />
               <h3 className="text-xl font-bold text-white mb-2">WordPress Web Design</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">Tailored WordPress installations, business portfolios, and content management sites.</p>
+              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Tailored WordPress installations, business portfolios, and content management sites.</p>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="p-8 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-600 transition">
               <Palette className="text-neutral-200 mb-4" size={32} />
               <h3 className="text-xl font-bold text-white mb-2">Branding & Media Design</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">Complete digital graphic design, social media assets, and promotional video editing.</p>
+              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Complete digital graphic design, social media assets, and promotional video editing.</p>
             </motion.div>
           </motion.div>
         </div>
