@@ -246,11 +246,11 @@ export default function Home() {
               Digital Creator & Developer
             </span>
 
-            {/* Tightened Line Height only for the name lines */}
-            <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold mb-8 text-white tracking-tight leading-[0.95] sm:leading-[0.95] w-full">
-              <span className="block mb-2 sm:mb-3">Hi, I'm</span>
-              <span className="block">Himasha Keshana</span>
-              <span className="inline-flex items-center gap-2 whitespace-nowrap mt-1">
+            {/* Consistent tight line height across all 3 lines of the heading */}
+            <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold mb-8 text-white tracking-tight leading-[0.95] sm:leading-[0.95] w-full flex flex-col items-center lg:items-start">
+              <span>Hi, I'm</span>
+              <span>Himasha Keshana</span>
+              <span className="inline-flex items-center gap-2 whitespace-nowrap">
                 <span>Rathnayaka</span>
                 <span className="text-2xl sm:text-4xl md:text-5xl">👋</span>
               </span>
