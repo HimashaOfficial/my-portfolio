@@ -7,7 +7,6 @@ import {
   ArrowUpRight, 
   Palette, 
   Video, 
-  Share2, 
   Cpu, 
   UserCheck,
   Mail,
@@ -18,10 +17,10 @@ import {
   X,
   Briefcase,
   GraduationCap,
-  ExternalLink,
   Layers,
   MessageSquare,
-  Loader2
+  Loader2,
+  Sparkles
 } from "lucide-react";
 
 const fadeInUp = {
@@ -132,7 +131,7 @@ export default function Home() {
 
     if (targetElement) {
       setTimeout(() => {
-        const navHeight = 80; // Fixed navbar height offset
+        const navHeight = 80;
         const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
         const offsetPosition = elementPosition - navHeight;
 
@@ -147,7 +146,7 @@ export default function Home() {
   return (
     <main className="w-full min-h-screen bg-black text-neutral-100 overflow-x-hidden selection:bg-neutral-800 selection:text-white m-0 p-0">
       
-      {/* Full Width Creative Floating Navbar */}
+      {/* Floating Navbar */}
       <nav className="fixed top-0 left-0 right-0 w-full bg-black/80 backdrop-blur-xl z-50 border-b border-neutral-800/80 py-4 px-6 md:px-16">
         <div className="w-full flex justify-between items-center">
           <motion.a 
@@ -160,7 +159,7 @@ export default function Home() {
             <span className="text-neutral-500 group-hover:text-white transition">.</span>
           </motion.a>
 
-          {/* Desktop Nav Items with Active Indicator Pill */}
+          {/* Desktop Nav Items */}
           <ul className="hidden md:flex items-center gap-2 text-xs md:text-sm font-medium bg-neutral-950/80 border border-neutral-800/80 p-1.5 rounded-full">
             {navItems.map((item) => {
               const id = item.href.substring(1);
@@ -187,7 +186,7 @@ export default function Home() {
             })}
           </ul>
 
-          {/* Mobile Hamburger Toggle */}
+          {/* Mobile Toggle */}
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden text-neutral-300 hover:text-white p-2 rounded-lg border border-neutral-800 bg-neutral-900"
@@ -242,11 +241,10 @@ export default function Home() {
         >
           {/* Left Text Block */}
           <div className="w-full lg:col-span-7 text-center lg:text-left flex flex-col items-center lg:items-start">
-            <span className="inline-block px-4 py-1.5 bg-neutral-900/90 text-neutral-300 border border-neutral-800 rounded-full text-xs font-medium tracking-wider uppercase mb-5">
-              Digital Creator & Developer
+            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-neutral-900/90 text-neutral-300 border border-neutral-800 rounded-full text-xs font-medium tracking-wider uppercase mb-5">
+              <Sparkles size={14} className="text-neutral-400" /> Digital Creator & Developer
             </span>
 
-            {/* Complete Name changed to White Solid Color */}
             <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold mb-4 text-white tracking-tight leading-tight w-full">
               Hi, I'm <br className="hidden sm:inline" />
               <span>Himasha Keshana</span>{" "}
@@ -256,12 +254,10 @@ export default function Home() {
               </span>
             </h1>
 
-            {/* Description with Video Editing */}
-            <p className="text-neutral-400 text-sm sm:text-base md:text-base lg:text-lg mb-8 leading-relaxed w-full max-w-xl md:max-w-2xl lg:max-w-2xl mx-auto lg:mx-0">
+            <p className="text-neutral-400 text-sm sm:text-base md:text-lg mb-8 leading-relaxed w-full max-w-xl md:max-w-2xl lg:max-w-2xl mx-auto lg:mx-0">
               Founder of <strong className="text-white">Virtmex</strong> and <strong className="text-white">VarixWare</strong>. Combining software engineering, WordPress development, graphic design, and video editing with AI-driven workflows to craft powerful digital solutions.
             </p>
 
-            {/* Sized & Equalized Buttons */}
             <div className="grid grid-cols-2 sm:flex sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4 w-full sm:w-auto">
               <a href="#projects" className="h-12 px-6 bg-white hover:bg-neutral-200 text-black font-semibold rounded-lg transition flex items-center justify-center gap-2 text-xs sm:text-sm w-full sm:w-auto">
                 View Work <ArrowUpRight size={16} />
@@ -275,10 +271,7 @@ export default function Home() {
           {/* Right Image Block */}
           <div className="w-full lg:col-span-5 flex justify-center items-center relative">
             <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-[320px] md:h-[320px] lg:w-[420px] lg:h-[420px]">
-              {/* Outer Subtle Ambient Glow */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-neutral-800 via-neutral-600 to-white/20 blur-2xl opacity-40 animate-pulse" />
-
-              {/* Ellipse Container */}
               <div className="relative w-full h-full rounded-full p-1.5 bg-gradient-to-b from-neutral-700 via-neutral-900 to-black border border-neutral-800 shadow-2xl overflow-hidden flex items-center justify-center">
                 <img 
                   src="/projects/myimage.png" 
@@ -298,16 +291,16 @@ export default function Home() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUp}
-          className="w-full max-w-6xl mx-auto"
+          className="w-full max-w-6xl mx-auto text-center"
         >
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 inline-flex items-center gap-3">
-              <UserCheck className="text-neutral-400" size={26} /> About Me
+          <div className="mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3 inline-flex items-center gap-2.5">
+              <UserCheck className="text-neutral-400" size={28} /> About Me
             </h2>
-            <p className="text-neutral-400 text-sm md:text-base">Background, leadership, and digital expertise.</p>
+            <p className="text-neutral-400 text-sm sm:text-base">Background, leadership, and digital expertise.</p>
           </div>
 
-          <div className="space-y-4 text-neutral-400 leading-relaxed text-xs md:text-sm max-w-4xl mx-auto">
+          <div className="space-y-4 text-neutral-300 leading-relaxed text-sm sm:text-base max-w-3xl mx-auto text-left sm:text-center">
             <p>
               I am an Information Technology student, Digital Creator, and the Founder/Owner of <strong className="text-white">Virtmex</strong> and <strong className="text-white">VarixWare</strong>. My expertise covers web engineering, custom software solutions, app development, and creative digital media.
             </p>
@@ -316,19 +309,19 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
-            <div className="p-5 bg-neutral-950 border border-neutral-800 rounded-xl flex items-center gap-4">
-              <Briefcase className="text-white shrink-0" size={22} />
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto text-left">
+            <div className="p-5 bg-neutral-950 border border-neutral-800 rounded-xl flex items-center gap-4 hover:border-neutral-700 transition">
+              <Briefcase className="text-white shrink-0" size={24} />
               <div>
-                <h3 className="text-white font-bold text-sm md:text-base">Virtmex</h3>
+                <h3 className="text-white font-bold text-base">Virtmex</h3>
                 <p className="text-xs text-neutral-400">Founder & Managing Brand Lead</p>
               </div>
             </div>
 
-            <div className="p-5 bg-neutral-950 border border-neutral-800 rounded-xl flex items-center gap-4">
-              <Briefcase className="text-white shrink-0" size={22} />
+            <div className="p-5 bg-neutral-950 border border-neutral-800 rounded-xl flex items-center gap-4 hover:border-neutral-700 transition">
+              <Briefcase className="text-white shrink-0" size={24} />
               <div>
-                <h3 className="text-white font-bold text-sm md:text-base">VarixWare</h3>
+                <h3 className="text-white font-bold text-base">VarixWare</h3>
                 <p className="text-xs text-neutral-400">Founder & Development Lead</p>
               </div>
             </div>
@@ -346,62 +339,62 @@ export default function Home() {
           className="w-full max-w-6xl mx-auto"
         >
           <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 inline-flex items-center gap-3">
-              <GraduationCap className="text-neutral-400" size={28} /> Education & Academic Qualifications
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3 inline-flex items-center gap-2.5">
+              <GraduationCap className="text-neutral-400" size={30} /> Education & Academic Qualifications
             </h2>
-            <p className="text-neutral-400 text-sm md:text-base">Academic journey and technical certifications.</p>
+            <p className="text-neutral-400 text-sm sm:text-base">Academic journey and technical certifications.</p>
           </div>
 
-          <div className="relative border-l border-neutral-800 ml-4 md:ml-auto pl-6 space-y-8 max-w-4xl mx-auto">
+          <div className="relative border-l border-neutral-800 ml-4 sm:ml-auto pl-6 sm:pl-8 space-y-8 max-w-3xl mx-auto">
 
-            {/* Degree - Reading */}
+            {/* Degree */}
             <div className="relative group">
-              <div className="absolute -left-[31px] top-1.5 w-3 h-3 bg-white rounded-full border-4 border-black" />
+              <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 bg-white rounded-full border-4 border-black" />
               <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                <span className="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-green-400 bg-green-950/60 border border-green-800/60 px-2.5 py-0.5 rounded-full">Present • Currently Reading</span>
+                <span className="text-xs font-semibold uppercase tracking-wider text-green-400 bg-green-950/60 border border-green-800/60 px-3 py-0.5 rounded-full">Present • Currently Reading</span>
                 <span className="text-xs text-neutral-500 font-mono">UCSC</span>
               </div>
-              <h3 className="text-base md:text-lg font-bold text-white mb-1">Bachelor of Information Technology (BIT)</h3>
-              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-1">Bachelor of Information Technology (BIT)</h3>
+              <p className="text-neutral-400 text-sm leading-relaxed">
                 University of Colombo School of Computing (UCSC)
               </p>
             </div>
 
             {/* Foundation */}
             <div className="relative group">
-              <div className="absolute -left-[31px] top-1.5 w-3 h-3 bg-neutral-600 rounded-full border-4 border-black" />
+              <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 bg-neutral-600 rounded-full border-4 border-black" />
               <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                <span className="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-neutral-400">2024 - 2025</span>
+                <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">2024 - 2025</span>
                 <span className="text-xs text-neutral-500 font-mono">UCSC</span>
               </div>
-              <h3 className="text-base md:text-lg font-bold text-white mb-1">Foundation in Information Technology (FIT)</h3>
-              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-1">Foundation in Information Technology (FIT)</h3>
+              <p className="text-neutral-400 text-sm leading-relaxed">
                 University of Colombo School of Computing (UCSC) — Eligible for Entry into Bachelor of Information Technology (BIT)
               </p>
             </div>
 
             {/* ICT Diploma */}
             <div className="relative group">
-              <div className="absolute -left-[31px] top-1.5 w-3 h-3 bg-neutral-600 rounded-full border-4 border-black" />
+              <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 bg-neutral-600 rounded-full border-4 border-black" />
               <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                <span className="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-neutral-400">2024 - 2025</span>
+                <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">2024 - 2025</span>
                 <span className="text-xs text-neutral-500 font-mono">IMBS Campus</span>
               </div>
-              <h3 className="text-base md:text-lg font-bold text-white mb-1">Diploma in Information & Communication Technology</h3>
-              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-1">Diploma in Information & Communication Technology</h3>
+              <p className="text-neutral-400 text-sm leading-relaxed">
                 IMBS Green Campus (1 Year Program)
               </p>
             </div>
 
             {/* Certificate */}
             <div className="relative group">
-              <div className="absolute -left-[31px] top-1.5 w-3 h-3 bg-neutral-600 rounded-full border-4 border-black" />
+              <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 bg-neutral-600 rounded-full border-4 border-black" />
               <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                <span className="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-neutral-400">2024</span>
+                <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">2024</span>
                 <span className="text-xs text-neutral-500 font-mono">CPS Campus</span>
               </div>
-              <h3 className="text-base md:text-lg font-bold text-white mb-1">Certificate in Graphic Designing</h3>
-              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-1">Certificate in Graphic Designing</h3>
+              <p className="text-neutral-400 text-sm leading-relaxed">
                 College of Professional Studies Campus
               </p>
             </div>
@@ -420,8 +413,10 @@ export default function Home() {
             variants={fadeInUp}
             className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">Skills & Expertise</h2>
-            <p className="text-neutral-400 text-sm md:text-base">Technical development, creative design, and strategic media creation.</p>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3 inline-flex items-center gap-2.5">
+              <Cpu className="text-neutral-400" size={28} /> Skills & Expertise
+            </h2>
+            <p className="text-neutral-400 text-sm sm:text-base">Technical development, creative design, and strategic media creation.</p>
           </motion.div>
 
           <motion.div 
@@ -432,39 +427,39 @@ export default function Home() {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             <motion.div variants={fadeInUp} className="p-7 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-700 transition">
-              <Code2 className="text-neutral-200 mb-4" size={28} />
+              <Code2 className="text-white mb-4" size={28} />
               <h3 className="text-lg font-bold text-white mb-2">Software Development</h3>
-              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Developing structured software logic, backend foundations, and custom application solutions.</p>
+              <p className="text-neutral-400 text-sm leading-relaxed">Developing structured software logic, backend foundations, and custom application solutions.</p>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="p-7 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-700 transition">
-              <Smartphone className="text-neutral-200 mb-4" size={28} />
+              <Smartphone className="text-white mb-4" size={28} />
               <h3 className="text-lg font-bold text-white mb-2">App Development</h3>
-              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Building intuitive cross-platform mobile interfaces and functional application systems.</p>
+              <p className="text-neutral-400 text-sm leading-relaxed">Building intuitive cross-platform mobile interfaces and functional application systems.</p>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="p-7 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-700 transition">
-              <Globe className="text-neutral-200 mb-4" size={28} />
+              <Globe className="text-white mb-4" size={28} />
               <h3 className="text-lg font-bold text-white mb-2">WordPress Development</h3>
-              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Customizing and managing WordPress architectures for business sites and content platforms.</p>
+              <p className="text-neutral-400 text-sm leading-relaxed">Customizing and managing WordPress architectures for business sites and content platforms.</p>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="p-7 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-700 transition">
-              <Palette className="text-neutral-200 mb-4" size={28} />
+              <Palette className="text-white mb-4" size={28} />
               <h3 className="text-lg font-bold text-white mb-2">Graphic Design</h3>
-              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Designing social media banners, marketing graphics, brand assets, and user interface elements.</p>
+              <p className="text-neutral-400 text-sm leading-relaxed">Designing social media banners, marketing graphics, brand assets, and user interface elements.</p>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="p-7 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-700 transition">
-              <Video className="text-neutral-200 mb-4" size={28} />
+              <Video className="text-white mb-4" size={28} />
               <h3 className="text-lg font-bold text-white mb-2">Video Editing</h3>
-              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Editing promotional videos and social media content for targeted brand engagement.</p>
+              <p className="text-neutral-400 text-sm leading-relaxed">Editing promotional videos and social media content for targeted brand engagement.</p>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="p-7 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-700 transition">
-              <Cpu className="text-neutral-200 mb-4" size={28} />
+              <Cpu className="text-white mb-4" size={28} />
               <h3 className="text-lg font-bold text-white mb-2">AI-Assisted Workflows</h3>
-              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Leveraging generative AI productivity tools to streamline design, media, and coding processes.</p>
+              <p className="text-neutral-400 text-sm leading-relaxed">Leveraging generative AI productivity tools to streamline design, media, and coding processes.</p>
             </motion.div>
           </motion.div>
         </div>
@@ -480,8 +475,10 @@ export default function Home() {
             variants={fadeInUp}
             className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">Services Offered</h2>
-            <p className="text-neutral-400 text-sm md:text-base">Comprehensive technical and creative services.</p>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3 inline-flex items-center gap-2.5">
+              <Layers className="text-neutral-400" size={28} /> Services Offered
+            </h2>
+            <p className="text-neutral-400 text-sm sm:text-base">Comprehensive technical and creative services.</p>
           </motion.div>
 
           <motion.div 
@@ -492,21 +489,21 @@ export default function Home() {
             className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"
           >
             <motion.div variants={fadeInUp} className="p-8 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-600 transition">
-              <Code2 className="text-neutral-200 mb-4" size={32} />
+              <Code2 className="text-white mb-4" size={32} />
               <h3 className="text-xl font-bold text-white mb-2">Software & App Solutions</h3>
-              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Custom software tools, functional web platforms, and user-friendly mobile application builds.</p>
+              <p className="text-neutral-400 text-sm leading-relaxed">Custom software tools, functional web platforms, and user-friendly mobile application builds.</p>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="p-8 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-600 transition">
-              <Globe className="text-neutral-200 mb-4" size={32} />
+              <Globe className="text-white mb-4" size={32} />
               <h3 className="text-xl font-bold text-white mb-2">WordPress Web Design</h3>
-              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Tailored WordPress installations, business portfolios, and content management sites.</p>
+              <p className="text-neutral-400 text-sm leading-relaxed">Tailored WordPress installations, business portfolios, and content management sites.</p>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="p-8 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-600 transition">
-              <Palette className="text-neutral-200 mb-4" size={32} />
+              <Palette className="text-white mb-4" size={32} />
               <h3 className="text-xl font-bold text-white mb-2">Branding & Media Design</h3>
-              <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">Complete digital graphic design, social media assets, and promotional video editing.</p>
+              <p className="text-neutral-400 text-sm leading-relaxed">Complete digital graphic design, social media assets, and promotional video editing.</p>
             </motion.div>
           </motion.div>
         </div>
@@ -522,14 +519,16 @@ export default function Home() {
             variants={fadeInUp}
             className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">Featured Software Builds</h2>
-            <p className="text-neutral-400 text-sm md:text-base">Custom mobile applications and responsive Web platforms.</p>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3 inline-flex items-center gap-2.5">
+              <Briefcase className="text-neutral-400" size={28} /> Featured Software Builds
+            </h2>
+            <p className="text-neutral-400 text-sm sm:text-base">Custom mobile applications and responsive Web platforms.</p>
           </motion.div>
 
           {/* Software Projects Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
 
-            {/* Project 1: App Development (Drivers Help App) */}
+            {/* Project 1 */}
             <motion.div 
               initial="hidden"
               whileInView="visible"
@@ -538,7 +537,6 @@ export default function Home() {
               className="bg-neutral-950 border border-neutral-800/80 rounded-2xl overflow-hidden hover:border-neutral-700 transition duration-300 flex flex-col justify-between group"
             >
               <div>
-                {/* Clean App Canvas */}
                 <div className="w-full h-48 sm:h-56 bg-neutral-900/60 flex items-center justify-center p-6 relative border-b border-neutral-800/60">
                   <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-2xl p-3 shadow-xl flex items-center justify-center group-hover:scale-105 transition duration-500">
                     <img 
@@ -560,7 +558,7 @@ export default function Home() {
                   <h3 className="text-xl font-bold text-white mb-2 group-hover:text-neutral-200 transition">
                     Drivers Help Mobile Application
                   </h3>
-                  <p className="text-neutral-400 text-xs md:text-sm leading-relaxed mb-6">
+                  <p className="text-neutral-400 text-sm leading-relaxed mb-6">
                     A dedicated mobile application solution designed to assist drivers with real-time support tools and operational assistance features.
                   </p>
                 </div>
@@ -568,14 +566,14 @@ export default function Home() {
 
               <div className="px-6 pb-6 md:px-7 md:pb-7">
                 <div className="flex flex-wrap gap-1.5 border-t border-neutral-900 pt-4">
-                  <span className="text-[10px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#AppDevelopment</span>
-                  <span className="text-[10px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#MobileUI</span>
-                  <span className="text-[10px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#DriverSolutions</span>
+                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#AppDevelopment</span>
+                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#MobileUI</span>
+                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#DriverSolutions</span>
                 </div>
               </div>
             </motion.div>
 
-            {/* Project 2: WordPress Site (Lopez Tours) */}
+            {/* Project 2 */}
             <motion.div 
               initial="hidden"
               whileInView="visible"
@@ -603,7 +601,7 @@ export default function Home() {
                   <h3 className="text-xl font-bold text-white mb-2 group-hover:text-neutral-200 transition">
                     Lopez Tours Travel Platform
                   </h3>
-                  <p className="text-neutral-400 text-xs md:text-sm leading-relaxed mb-6">
+                  <p className="text-neutral-400 text-sm leading-relaxed mb-6">
                     A customized WordPress platform developed for Lopez Tours, featuring tailored layouts, travel packages, and brand content management.
                   </p>
                 </div>
@@ -611,16 +609,16 @@ export default function Home() {
 
               <div className="px-6 pb-6 md:px-7 md:pb-7">
                 <div className="flex flex-wrap gap-1.5 border-t border-neutral-900 pt-4">
-                  <span className="text-[10px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#WordPress</span>
-                  <span className="text-[10px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#TravelWeb</span>
-                  <span className="text-[10px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#CMS</span>
+                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#WordPress</span>
+                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#TravelWeb</span>
+                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#CMS</span>
                 </div>
               </div>
             </motion.div>
 
           </div>
 
-          {/* High-End Creative Media Requests Banner */}
+          {/* Media Banner */}
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -635,13 +633,13 @@ export default function Home() {
 
             <h3 className="text-xl font-bold text-white mb-2">Looking for Creative Media & Design Portfolios?</h3>
 
-            <p className="text-neutral-400 text-xs md:text-sm max-w-2xl leading-relaxed mb-6">
+            <p className="text-neutral-400 text-sm max-w-2xl leading-relaxed mb-6">
               I have executed various custom brand graphic design packages, social media marketing assets, and video editing campaigns. Specific media work samples and project presentations are available upon direct request.
             </p>
 
             <a 
               href="#contact" 
-              className="px-6 py-2.5 bg-white hover:bg-neutral-200 text-black font-semibold rounded-lg text-xs md:text-sm transition flex items-center gap-2"
+              className="px-6 py-2.5 bg-white hover:bg-neutral-200 text-black font-semibold rounded-lg text-xs sm:text-sm transition flex items-center gap-2"
             >
               <MessageSquare size={16} /> Request Media Samples
             </a>
@@ -658,15 +656,17 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
-            className="text-center mb-8"
+            className="text-center mb-10"
           >
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Get In Touch</h2>
-            <p className="text-neutral-400 text-xs md:text-sm">Let's connect for projects, collaborations, or inquiries.</p>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3 inline-flex items-center gap-2.5">
+              <MessageSquare className="text-neutral-400" size={28} /> Get In Touch
+            </h2>
+            <p className="text-neutral-400 text-sm sm:text-base">Let's connect for projects, collaborations, or inquiries.</p>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
 
-            {/* Left: Connected Contact Form */}
+            {/* Left: Contact Form */}
             <motion.form 
               initial="hidden"
               whileInView="visible"
@@ -675,11 +675,13 @@ export default function Home() {
               onSubmit={handleSubmit} 
               className="lg:col-span-7 bg-neutral-950 border border-neutral-800 p-6 md:p-7 rounded-2xl flex flex-col justify-between"
             >
-              <div className="space-y-3">
-                <h3 className="text-lg font-bold text-white mb-1">Send a Message</h3>
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-white mb-1 flex items-center gap-2">
+                  <Mail size={18} className="text-neutral-400" /> Send a Message
+                </h3>
 
                 <div>
-                  <label className="block text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-1">Your Name</label>
+                  <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1.5">Your Name</label>
                   <input 
                     type="text" 
                     name="name"
@@ -687,13 +689,13 @@ export default function Home() {
                     onChange={handleChange}
                     required 
                     placeholder="Enter your name" 
-                    className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-3.5 py-2.5 text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-500 transition text-xs md:text-sm"
+                    className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2.5 text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-500 transition text-sm"
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-1">Your Email</label>
+                    <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1.5">Your Email</label>
                     <input 
                       type="email" 
                       name="email"
@@ -701,25 +703,25 @@ export default function Home() {
                       onChange={handleChange}
                       required 
                       placeholder="name@example.com" 
-                      className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-3.5 py-2.5 text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-500 transition text-xs md:text-sm"
+                      className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2.5 text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-500 transition text-sm"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-1">Mobile Number</label>
+                    <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1.5">Mobile Number</label>
                     <input 
                       type="tel" 
                       name="mobile"
                       value={formData.mobile}
                       onChange={handleChange}
                       placeholder="+94 75 043 4734" 
-                      className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-3.5 py-2.5 text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-500 transition text-xs md:text-sm"
+                      className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2.5 text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-500 transition text-sm"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-semibold text-neutral-400 uppercase tracking-wider mb-1">Message</label>
+                  <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-1.5">Message</label>
                   <textarea 
                     rows="3" 
                     name="message"
@@ -727,7 +729,7 @@ export default function Home() {
                     onChange={handleChange}
                     required 
                     placeholder="Write your message here..." 
-                    className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-3.5 py-2.5 text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-500 transition text-xs md:text-sm resize-none"
+                    className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2.5 text-white placeholder-neutral-600 focus:outline-none focus:border-neutral-500 transition text-sm resize-none"
                   ></textarea>
                 </div>
 
@@ -739,14 +741,14 @@ export default function Home() {
               <button 
                 type="submit" 
                 disabled={loading}
-                className="w-full mt-4 py-3 bg-white hover:bg-neutral-200 text-black font-semibold rounded-lg transition flex items-center justify-center gap-2 text-xs md:text-sm disabled:opacity-50"
+                className="w-full mt-5 py-3 bg-white hover:bg-neutral-200 text-black font-semibold rounded-lg transition flex items-center justify-center gap-2 text-sm disabled:opacity-50"
               >
                 {loading ? (
                   <span className="flex items-center gap-2 text-black"><Loader2 size={16} className="animate-spin" /> Sending...</span>
                 ) : submitted ? (
                   <span className="flex items-center gap-2 text-green-700"><CheckCircle2 size={16} /> Message Sent!</span>
                 ) : (
-                  <span className="flex items-center gap-2"><Mail size={16} /> Send Message</span>
+                  <span className="flex items-center gap-2"><Send size={16} /> Send Message</span>
                 )}
               </button>
             </motion.form>
@@ -792,7 +794,7 @@ export default function Home() {
 
               {/* Social Media Grid Box */}
               <div className="p-5 bg-neutral-950 border border-neutral-800 rounded-2xl flex-1 flex flex-col justify-center">
-                <h3 className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider mb-2">Connect On Social Media</h3>
+                <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-2.5">Connect On Social Media</h3>
 
                 <div className="grid grid-cols-2 gap-2">
                   <a href="https://www.linkedin.com/in/himasha-rathnayaka-4328493a8" target="_blank" rel="noopener noreferrer" className="p-2 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800/80 rounded-lg flex items-center gap-2 text-xs text-neutral-300 hover:text-white transition">
