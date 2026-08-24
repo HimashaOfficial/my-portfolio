@@ -233,44 +233,49 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section id="hero" className="w-full min-h-screen flex flex-col justify-center items-center pt-28 pb-12 px-6 md:px-16">
+      <section id="hero" className="w-full min-h-screen flex flex-col justify-center items-center pt-24 md:pt-28 pb-12 px-6 md:px-16">
         <motion.div 
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
-          className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center"
+          className="w-full max-w-6xl mx-auto flex flex-col-reverse lg:grid lg:grid-cols-12 gap-8 lg:gap-12 items-center"
         >
           {/* Left Text Block */}
-          <div className="lg:col-span-7 text-center lg:text-left">
-            <span className="inline-block px-4 py-1.5 bg-neutral-900/90 text-neutral-300 border border-neutral-800 rounded-full text-xs font-medium tracking-wider uppercase mb-6">
+          <div className="lg:col-span-7 text-center lg:text-left flex flex-col items-center lg:items-start">
+            <span className="inline-block px-4 py-1.5 bg-neutral-900/90 text-neutral-300 border border-neutral-800 rounded-full text-xs font-medium tracking-wider uppercase mb-5">
               Digital Creator & Developer
             </span>
             
             <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold mb-4 text-white tracking-tight leading-tight">
               Hi, I'm <br />
               <span className="bg-gradient-to-r from-white via-neutral-200 to-neutral-500 bg-clip-text text-transparent">
-                Himasha Keshana Rathnayaka
+                Himasha Keshana
+              </span>{" "}
+              <span className="inline-inline whitespace-nowrap">
+                <span className="bg-gradient-to-r from-neutral-200 to-neutral-500 bg-clip-text text-transparent">
+                  Rathnayaka
+                </span>
+                <span className="inline-block ml-2 text-2xl sm:text-4xl md:text-5xl">👋</span>
               </span>
-              <span className="inline-block ml-2">👋</span>
             </h1>
             
             <p className="text-neutral-400 text-base md:text-lg mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
               Founder of <strong className="text-white">Virtmex</strong> and <strong className="text-white">VarixWare</strong>. Combining software engineering, WordPress development, and graphic design with AI-driven workflows to craft powerful digital solutions.
             </p>
             
-            <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-              <a href="#projects" className="px-7 py-3 bg-white hover:bg-neutral-200 text-black font-semibold rounded-lg transition flex items-center gap-2 text-sm">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-4 w-full sm:w-auto">
+              <a href="#projects" className="px-7 py-3 bg-white hover:bg-neutral-200 text-black font-semibold rounded-lg transition flex items-center justify-center gap-2 text-sm w-full sm:w-auto">
                 View Work <ArrowUpRight size={16} />
               </a>
-              <a href="#contact" className="px-7 py-3 border border-neutral-800 hover:bg-neutral-900 text-neutral-300 font-medium rounded-lg transition text-sm">
+              <a href="#contact" className="px-7 py-3 border border-neutral-800 hover:bg-neutral-900 text-neutral-300 font-medium rounded-lg transition text-sm w-full sm:w-auto text-center">
                 Get In Touch
               </a>
             </div>
           </div>
 
-          {/* Right Image Block (Ellipse Glow Frame) */}
-          <div className="lg:col-span-5 flex justify-center items-center relative">
-            <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96">
+          {/* Right Image Block (Profile Photo - First on Mobile/Tablet) */}
+          <div className="lg:col-span-5 flex justify-center items-center relative w-full">
+            <div className="relative w-52 h-52 sm:w-72 sm:h-72 md:w-[360px] md:h-[360px] lg:w-[420px] lg:h-[420px]">
               {/* Outer Subtle Ambient Glow */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-neutral-800 via-neutral-600 to-white/20 blur-2xl opacity-40 animate-pulse" />
               
@@ -288,7 +293,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="w-full min-h-screen flex flex-col justify-center py-24 px-6 md:px-16 border-t border-neutral-900">
+      <section id="about" className="w-full py-16 md:py-20 lg:py-24 px-6 md:px-16 border-t border-neutral-900">
         <motion.div 
           initial="hidden"
           whileInView="visible"
@@ -329,7 +334,7 @@ export default function Home() {
       </section>
 
       {/* Professional Education Section */}
-      <section id="education" className="w-full min-h-screen flex flex-col justify-center py-24 px-6 md:px-16 border-t border-neutral-900">
+      <section id="education" className="w-full py-16 md:py-20 lg:py-24 px-6 md:px-16 border-t border-neutral-900">
         <motion.div 
           initial="hidden"
           whileInView="visible"
@@ -400,14 +405,14 @@ export default function Home() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="w-full min-h-screen flex flex-col justify-center py-24 px-6 md:px-16 border-t border-neutral-900">
+      <section id="skills" className="w-full py-16 md:py-20 lg:py-24 px-6 md:px-16 border-t border-neutral-900">
         <div className="w-full max-w-6xl mx-auto">
           <motion.div 
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
-            className="text-center mb-16"
+            className="text-center mb-12 md:mb-16"
           >
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">Skills & Expertise</h2>
             <p className="text-neutral-400 text-sm md:text-base">Technical development, creative design, and strategic media creation.</p>
@@ -460,14 +465,14 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="w-full min-h-screen flex flex-col justify-center py-24 px-6 md:px-16 border-t border-neutral-900">
+      <section id="services" className="w-full py-16 md:py-20 lg:py-24 px-6 md:px-16 border-t border-neutral-900">
         <div className="w-full max-w-6xl mx-auto">
           <motion.div 
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
-            className="text-center mb-16"
+            className="text-center mb-12 md:mb-16"
           >
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">Services Offered</h2>
             <p className="text-neutral-400 text-sm md:text-base">Comprehensive technical and creative services.</p>
@@ -478,7 +483,7 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
             variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"
           >
             <motion.div variants={fadeInUp} className="p-8 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-600 transition">
               <Code2 className="text-neutral-200 mb-4" size={32} />
@@ -502,14 +507,14 @@ export default function Home() {
       </section>
 
       {/* Featured Projects Section */}
-      <section id="projects" className="w-full min-h-screen flex flex-col justify-center py-24 px-6 md:px-16 border-t border-neutral-900">
+      <section id="projects" className="w-full py-16 md:py-20 lg:py-24 px-6 md:px-16 border-t border-neutral-900">
         <div className="w-full max-w-6xl mx-auto">
           <motion.div 
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeInUp}
-            className="text-center mb-16"
+            className="text-center mb-12 md:mb-16"
           >
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">Featured Software Builds</h2>
             <p className="text-neutral-400 text-sm md:text-base">Custom mobile applications and responsive Web platforms.</p>
@@ -527,9 +532,9 @@ export default function Home() {
               className="bg-neutral-950 border border-neutral-800/80 rounded-2xl overflow-hidden hover:border-neutral-700 transition duration-300 flex flex-col justify-between group"
             >
               <div>
-                {/* Clean App Canvas */}
-                <div className="w-full h-56 bg-neutral-900/60 flex items-center justify-center relative border-b border-neutral-800/60">
-                  <div className="w-20 h-20 bg-white rounded-2xl p-2.5 shadow-xl flex items-center justify-center group-hover:scale-105 transition duration-500">
+                {/* Clean App Canvas - Fixed Crop Issues */}
+                <div className="w-full h-48 sm:h-56 bg-neutral-900/60 flex items-center justify-center p-6 relative border-b border-neutral-800/60">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-2xl p-3 shadow-xl flex items-center justify-center group-hover:scale-105 transition duration-500">
                     <img 
                       src="/projects/Drivers Help App Logo.png" 
                       alt="Drivers Help App Logo" 
@@ -538,7 +543,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="p-7">
+                <div className="p-6 md:p-7">
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-[11px] font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800 px-3 py-1 rounded-full uppercase tracking-wider">
                       App Development
@@ -555,7 +560,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="px-7 pb-7">
+              <div className="px-6 pb-6 md:px-7 md:pb-7">
                 <div className="flex flex-wrap gap-1.5 border-t border-neutral-900 pt-4">
                   <span className="text-[10px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#AppDevelopment</span>
                   <span className="text-[10px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#MobileUI</span>
@@ -564,7 +569,7 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* Project 2: WordPress Site (Lopez Tours) - Full Edge Banner */}
+            {/* Project 2: WordPress Site (Lopez Tours) - Uncropped Banner Fix */}
             <motion.div 
               initial="hidden"
               whileInView="visible"
@@ -573,8 +578,8 @@ export default function Home() {
               className="bg-neutral-950 border border-neutral-800/80 rounded-2xl overflow-hidden hover:border-neutral-700 transition duration-300 flex flex-col justify-between group"
             >
               <div>
-                {/* Full Bleed Image Banner */}
-                <div className="w-full h-56 overflow-hidden relative border-b border-neutral-800/60">
+                {/* Full Banner Display without Cropping */}
+                <div className="w-full bg-neutral-900 relative border-b border-neutral-800/60 overflow-hidden aspect-[16/10] sm:aspect-[16/9]">
                   <img 
                     src="/projects/lopez tours.png" 
                     alt="Lopez Tours Website Screenshot" 
@@ -582,7 +587,7 @@ export default function Home() {
                   />
                 </div>
 
-                <div className="p-7">
+                <div className="p-6 md:p-7">
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-[11px] font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800 px-3 py-1 rounded-full uppercase tracking-wider">
                       WordPress Development
@@ -599,7 +604,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="px-7 pb-7">
+              <div className="px-6 pb-6 md:px-7 md:pb-7">
                 <div className="flex flex-wrap gap-1.5 border-t border-neutral-900 pt-4">
                   <span className="text-[10px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#WordPress</span>
                   <span className="text-[10px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#TravelWeb</span>
@@ -641,7 +646,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="w-full min-h-screen flex flex-col justify-center py-16 px-6 md:px-16 border-t border-neutral-900">
+      <section id="contact" className="w-full py-16 md:py-20 lg:py-24 px-6 md:px-16 border-t border-neutral-900">
         <div className="w-full max-w-6xl mx-auto">
           <motion.div 
             initial="hidden"
