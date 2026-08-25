@@ -21,7 +21,9 @@ import {
   MessageSquare,
   Loader2,
   Sparkles,
-  Clapperboard
+  Clapperboard,
+  BookOpen,
+  Users
 } from "lucide-react";
 
 const fadeInUp = {
@@ -538,7 +540,7 @@ export default function Home() {
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3 inline-flex items-center gap-2.5">
               <Briefcase className="text-neutral-400" size={28} /> Featured Software Builds
             </h2>
-            <p className="text-neutral-400 text-sm sm:text-base">Custom mobile applications and responsive Web platforms.</p>
+            <p className="text-neutral-400 text-sm sm:text-base">Custom mobile applications, management systems, and web platforms.</p>
           </motion.div>
 
           {/* Software Projects Grid */}
@@ -628,6 +630,88 @@ export default function Home() {
                   <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#WordPress</span>
                   <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#TravelWeb</span>
                   <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#CMS</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Project 3: Library Management System */}
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="bg-neutral-950 border border-neutral-800/80 rounded-2xl overflow-hidden hover:border-neutral-700 transition duration-300 flex flex-col justify-between group"
+            >
+              <div>
+                <div className="w-full h-48 sm:h-56 bg-neutral-900/60 flex items-center justify-center p-6 relative border-b border-neutral-800/60">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 bg-neutral-950 border border-neutral-800 rounded-2xl flex items-center justify-center text-white shadow-xl group-hover:scale-105 transition duration-500">
+                    <BookOpen size={40} className="text-neutral-300 group-hover:text-white transition" />
+                  </div>
+                </div>
+
+                <div className="p-6 md:p-7">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-[11px] font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800 px-3 py-1 rounded-full uppercase tracking-wider">
+                      Software System
+                    </span>
+                    <Code2 size={18} className="text-neutral-500 group-hover:text-white transition" />
+                  </div>
+
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-neutral-200 transition">
+                    Library Management System
+                  </h3>
+                  <p className="text-neutral-400 text-sm leading-relaxed mb-6">
+                    A comprehensive software system designed to automate library operations, book indexing, member tracking, and issue-return management.
+                  </p>
+                </div>
+              </div>
+
+              <div className="px-6 pb-6 md:px-7 md:pb-7">
+                <div className="flex flex-wrap gap-1.5 border-t border-neutral-900 pt-4">
+                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#SoftwareDev</span>
+                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#ManagementSystem</span>
+                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#Database</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Project 4: Student Management System Web Application */}
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="bg-neutral-950 border border-neutral-800/80 rounded-2xl overflow-hidden hover:border-neutral-700 transition duration-300 flex flex-col justify-between group"
+            >
+              <div>
+                <div className="w-full h-48 sm:h-56 bg-neutral-900/60 flex items-center justify-center p-6 relative border-b border-neutral-800/60">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 bg-neutral-950 border border-neutral-800 rounded-2xl flex items-center justify-center text-white shadow-xl group-hover:scale-105 transition duration-500">
+                    <Users size={40} className="text-neutral-300 group-hover:text-white transition" />
+                  </div>
+                </div>
+
+                <div className="p-6 md:p-7">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-[11px] font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800 px-3 py-1 rounded-full uppercase tracking-wider">
+                      Web Application
+                    </span>
+                    <Globe size={18} className="text-neutral-500 group-hover:text-white transition" />
+                  </div>
+
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-neutral-200 transition">
+                    Student Management System Web App
+                  </h3>
+                  <p className="text-neutral-400 text-sm leading-relaxed mb-6">
+                    A web-based management platform built to streamline student enrollments, academic records tracking, and administrative data management.
+                  </p>
+                </div>
+              </div>
+
+              <div className="px-6 pb-6 md:px-7 md:pb-7">
+                <div className="flex flex-wrap gap-1.5 border-t border-neutral-900 pt-4">
+                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#WebApp</span>
+                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#StudentPortal</span>
+                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#FullStack</span>
                 </div>
               </div>
             </motion.div>
