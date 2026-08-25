@@ -20,7 +20,8 @@ import {
   Layers,
   MessageSquare,
   Loader2,
-  Sparkles
+  Sparkles,
+  Clapperboard
 } from "lucide-react";
 
 const fadeInUp = {
@@ -462,7 +463,7 @@ export default function Home() {
             <motion.div variants={fadeInUp} className="p-7 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-700 transition">
               <Video className="text-white mb-4" size={28} />
               <h3 className="text-lg font-bold text-white mb-2">Video Editing</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">Editing promotional videos and social media content for targeted brand engagement.</p>
+              <p className="text-neutral-400 text-sm leading-relaxed">Editing engaging short-form and long-form video content designed specifically for social media growth.</p>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="p-7 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-700 transition">
@@ -495,7 +496,7 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
             variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
           >
             <motion.div variants={fadeInUp} className="p-8 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-600 transition">
               <Code2 className="text-white mb-4" size={32} />
@@ -513,6 +514,12 @@ export default function Home() {
               <Palette className="text-white mb-4" size={32} />
               <h3 className="text-xl font-bold text-white mb-2">Branding & Media Design</h3>
               <p className="text-neutral-400 text-sm leading-relaxed">Complete digital graphic design, social media assets, and promotional video editing.</p>
+            </motion.div>
+
+            <motion.div variants={fadeInUp} className="p-8 bg-neutral-950 border border-neutral-800 rounded-xl hover:border-neutral-600 transition">
+              <Clapperboard className="text-white mb-4" size={32} />
+              <h3 className="text-xl font-bold text-white mb-2">AI Video Creation</h3>
+              <p className="text-neutral-400 text-sm leading-relaxed">Generating high-quality, engaging video content tailored for social media using advanced AI video tools.</p>
             </motion.div>
           </motion.div>
         </div>
