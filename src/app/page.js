@@ -378,7 +378,7 @@ export default function Home() {
               </div>
               <h3 className="text-lg sm:text-xl font-bold text-white mb-1">Foundation in Information Technology (FIT)</h3>
               <p className="text-neutral-400 text-sm leading-relaxed">
-                University of Colombo School of Computing (UCSC) — Eligible for Entry into Bachelor of Information Technology (BIT)
+                University of Colombo School of Computing (UCSC)
               </p>
             </div>
 
