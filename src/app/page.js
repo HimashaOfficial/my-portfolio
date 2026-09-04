@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { client, urlFor } from "./lib/sanity"; // Sanity Client Path & urlFor helper
+import { client, urlFor } from "./lib/sanity";
 import { groq } from "next-sanity";
 
 import { 
@@ -24,44 +24,41 @@ import {
   MessageSquare,
   Loader2,
   Sparkles,
-  Clapperboard,
-  BookOpen,
-  Users
+  Clapperboard
 } from "lucide-react";
 
-// Fallback Hardcoded Projects List
-const initialProjects = [
-  {
-    _id: "static-1",
-    title: "Thalumara Kitchen Website",
-    description: "Custom platform and menu system developed for Thalumara Kitchen business operations.",
-    category: "Software",
-    tags: ["React", "Next.js", "Tailwind CSS"],
-    imageUrl: "/projects/thalumara.png",
-    projectLink: "#"
-  },
-  {
-    _id: "static-2",
-    title: "Binaya Clothing Portal",
-    description: "Digital campaign and client integration interface for Binaya Clothing brand.",
-    category: "Web App",
-    tags: ["Next.js", "Node.js", "Tailwind"],
-    imageUrl: "/projects/binaya.png",
-    projectLink: "#"
-  }
-];
-
-// GROQ Query for Dynamic Projects (Schema Match)
+// GROQ Query for Dynamic Projects
 const projectsQuery = groq`*[_type == "project"] | order(_createdAt desc) {
   _id,
   title,
   description,
   category,
-  "tags": technologies,
-  image,
+  tags,
   "imageUrl": image.asset->url,
-  "projectLink": demoLink
+  projectLink
 }`;
+
+// Hardcoded Static Projects (Safety Fallback & Base Data)
+const staticProjects = [
+  {
+    _id: "static-1",
+    title: "Thalumara Kitchen Web Platform",
+    description: "Custom web interface and online order management system built for local food brand operations.",
+    category: "Software",
+    tags: ["Next.js", "React", "Tailwind CSS"],
+    imageUrl: "/projects/thalumara.png",
+    projectLink: "#"
+  },
+  {
+    _id: "static-2",
+    title: "Binaya Clothing Social & Ad Campaign",
+    description: "Digital campaign management, content production, and high-converting targeted advertisement strategy.",
+    category: "Digital Marketing",
+    tags: ["Meta Ads", "Content Strategy", "Branding"],
+    imageUrl: "/projects/binaya.png",
+    projectLink: "#"
+  }
+];
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -90,8 +87,8 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState("hero");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Sanity Dynamic Data States initialized with fallback projects
-  const [projects, setProjects] = useState(initialProjects);
+  // Default initial state uses static projects so nothing disappears
+  const [projects, setProjects] = useState(staticProjects);
   const [projectsLoading, setProjectsLoading] = useState(true);
 
   // Form States
@@ -105,20 +102,17 @@ export default function Home() {
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Fetch Sanity Data on Mount & Merge with Static Projects
+  // Safe Dynamic Fetching with Merge Strategy
   useEffect(() => {
     async function fetchSanityData() {
       try {
         const fetchedProjects = await client.fetch(projectsQuery);
         if (fetchedProjects && fetchedProjects.length > 0) {
-          // Merge Sanity projects on top of static projects
-          setProjects([...fetchedProjects, ...initialProjects]);
-        } else {
-          setProjects(initialProjects);
+          // Merge dynamic Sanity content above existing static items
+          setProjects([...fetchedProjects, ...staticProjects]);
         }
       } catch (error) {
-        console.error("Sanity Query Error:", error);
-        setProjects(initialProjects);
+        console.error("Sanity Query Fetch Error (Fallback to static data active):", error);
       } finally {
         setProjectsLoading(false);
       }
@@ -576,7 +570,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Dynamic Featured Projects Section (Sanity Integrated + Fallback Support) */}
+      {/* Dynamic Featured Projects Section */}
       <section id="projects" className="w-full py-16 md:py-20 lg:py-24 px-6 md:px-16 border-t border-neutral-900">
         <div className="w-full max-w-6xl mx-auto">
           <motion.div 
@@ -592,15 +586,11 @@ export default function Home() {
             <p className="text-neutral-400 text-sm sm:text-base">Custom mobile applications, management systems, and web platforms.</p>
           </motion.div>
 
-          {/* Projects Grid with Static Fallback */}
+          {/* Dynamic Sanity + Base Projects Grid */}
           {projectsLoading ? (
             <div className="flex justify-center items-center py-20 text-neutral-400 gap-3">
               <Loader2 className="animate-spin" size={24} />
-              <span>Fetching projects from Sanity CMS...</span>
-            </div>
-          ) : projects.length === 0 ? (
-            <div className="text-center py-12 text-neutral-500">
-              No projects added yet in Sanity Studio.
+              <span>Loading Projects...</span>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
@@ -615,13 +605,7 @@ export default function Home() {
                 >
                   <div>
                     <div className="w-full bg-neutral-900 relative border-b border-neutral-800/60 overflow-hidden aspect-[16/10] sm:aspect-[16/9] flex items-center justify-center">
-                      {project.image ? (
-                        <img 
-                          src={urlFor(project.image).url()} 
-                          alt={project.title} 
-                          className="w-full h-full object-cover object-top group-hover:scale-105 transition duration-500"
-                        />
-                      ) : project.imageUrl ? (
+                      {project.imageUrl ? (
                         <img 
                           src={project.imageUrl} 
                           alt={project.title} 
@@ -637,7 +621,7 @@ export default function Home() {
                         <span className="text-[11px] font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800 px-3 py-1 rounded-full uppercase tracking-wider">
                           {project.category || "Software"}
                         </span>
-                        {project.projectLink && (
+                        {project.projectLink && project.projectLink !== "#" && (
                           <a href={project.projectLink} target="_blank" rel="noopener noreferrer">
                             <ArrowUpRight size={18} className="text-neutral-500 hover:text-white transition" />
                           </a>
@@ -868,7 +852,7 @@ export default function Home() {
                   </a>
 
                   <a href="https://www.tiktok.com/@himashakeshana" target="_blank" rel="noopener noreferrer" className="p-2 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800/80 rounded-lg flex items-center gap-2 text-xs text-neutral-300 hover:text-white transition">
-                    <svg className="w-3.5 h-3.5 fill-current" viewBox="00 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-1-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.82.56-1.33 1.52-1.33 2.52.01 1.01.55 1.96 1.39 2.51.87.58 2 .62 2.92.13.83-.43 1.41-1.28 1.52-2.22.03-2.31.02-4.63.02-6.95 0-3.37-.01-6.74.01-10.11z"/></svg>
+                    <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-1-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.82.56-1.33 1.52-1.33 2.52.01 1.01.55 1.96 1.39 2.51.87.58 2 .62 2.92.13.83-.43 1.41-1.28 1.52-2.22.03-2.31.02-4.63.02-6.95 0-3.37-.01-6.74.01-10.11z"/></svg>
                     TikTok
                   </a>
                 </div>
