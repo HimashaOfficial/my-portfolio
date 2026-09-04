@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { client, urlFor } from "./lib/sanity";
+import { client, urlFor } from "@/sanity/lib/client"; // Sanity Client Path & urlFor helper
 import { groq } from "next-sanity";
 
 import { 
