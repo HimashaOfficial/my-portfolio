@@ -1,6 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { client, urlFor } from "@/sanity/lib/client"; // Sanity Client Path & urlFor helper
+import { groq } from "next-sanity";
+
 import { 
   Globe, 
   Send, 
@@ -25,6 +28,18 @@ import {
   BookOpen,
   Users
 } from "lucide-react";
+
+// GROQ Query for Dynamic Projects (Schema Match)
+const projectsQuery = groq`*[_type == "project"] | order(_createdAt desc) {
+  _id,
+  title,
+  description,
+  category,
+  "tags": technologies,
+  image,
+  "imageUrl": image.asset->url,
+  "projectLink": demoLink
+}`;
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -53,7 +68,11 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState("hero");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Form States connected to Resend Backend API
+  // Sanity Dynamic Data States
+  const [projects, setProjects] = useState([]);
+  const [projectsLoading, setProjectsLoading] = useState(true);
+
+  // Form States
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -63,6 +82,22 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  // Fetch Sanity Data on Mount
+  useEffect(() => {
+    async function fetchSanityData() {
+      try {
+        const fetchedProjects = await client.fetch(projectsQuery);
+        setProjects(fetchedProjects);
+      } catch (error) {
+        console.error("Sanity Query Error:", error);
+      } finally {
+        setProjectsLoading(false);
+      }
+    }
+
+    fetchSanityData();
+  }, []);
 
   // Auto detect active section on scroll
   useEffect(() => {
@@ -87,12 +122,10 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Form Input Change Handler
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Backend API Call on Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -124,7 +157,6 @@ export default function Home() {
     }
   };
 
-  // Fixed mobile navigation handler
   const handleMobileNavClick = (e, href) => {
     e.preventDefault();
     const targetId = href.substring(1);
@@ -242,7 +274,6 @@ export default function Home() {
           variants={fadeInUp}
           className="w-full max-w-6xl mx-auto flex flex-col-reverse lg:grid lg:grid-cols-12 gap-8 lg:gap-12 items-center"
         >
-          {/* Left Text Block */}
           <div className="w-full lg:col-span-7 text-center lg:text-left flex flex-col items-center lg:items-start">
             <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-neutral-900/90 text-neutral-300 border border-neutral-800 rounded-full text-xs font-medium tracking-wider uppercase mb-5">
               <Sparkles size={14} className="text-neutral-400" /> Digital Creator & Developer
@@ -271,7 +302,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right Image Block */}
           <div className="w-full lg:col-span-5 flex justify-center items-center relative">
             <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-[320px] md:h-[320px] lg:w-[420px] lg:h-[420px]">
               <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-neutral-800 via-neutral-600 to-white/20 blur-2xl opacity-40 animate-pulse" />
@@ -296,7 +326,6 @@ export default function Home() {
           variants={fadeInUp}
           className="w-full max-w-4xl mx-auto"
         >
-          {/* Section Header */}
           <div className="text-center mb-10 md:mb-12">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3 inline-flex items-center gap-2.5">
               <UserCheck className="text-neutral-400" size={28} /> About Me
@@ -306,7 +335,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Clean & Balanced Bio Text */}
           <div className="bg-neutral-950 border border-neutral-800/80 rounded-2xl p-6 sm:p-8 md:p-10 space-y-5 text-neutral-300 text-sm sm:text-base leading-relaxed text-left sm:text-center max-w-3xl mx-auto shadow-xl">
             <p className="tracking-normal">
               I am an <strong className="text-white">Information Technology student</strong>, Digital Creator, and the Founder of <strong className="text-white">Virtmex</strong> and <strong className="text-white">VarixWare</strong>. My focus spans web engineering, custom software solutions, app development, and high-impact digital media.
@@ -316,7 +344,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Brand Cards */}
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
             <div className="p-5 bg-neutral-950 border border-neutral-800 rounded-xl flex items-center gap-4 hover:border-neutral-700 transition">
               <div className="w-10 h-10 bg-neutral-900 border border-neutral-800 rounded-lg flex items-center justify-center shrink-0">
@@ -358,8 +385,6 @@ export default function Home() {
           </div>
 
           <div className="relative border-l border-neutral-800 ml-4 sm:ml-auto pl-6 sm:pl-8 space-y-8 max-w-3xl mx-auto">
-
-            {/* Degree */}
             <div className="relative group">
               <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 bg-white rounded-full border-4 border-black" />
               <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
@@ -372,7 +397,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Foundation */}
             <div className="relative group">
               <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 bg-neutral-600 rounded-full border-4 border-black" />
               <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
@@ -385,7 +409,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* ICT Diploma */}
             <div className="relative group">
               <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 bg-neutral-600 rounded-full border-4 border-black" />
               <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
@@ -398,7 +421,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Certificate */}
             <div className="relative group">
               <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 bg-neutral-600 rounded-full border-4 border-black" />
               <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
@@ -410,7 +432,6 @@ export default function Home() {
                 College of Professional Studies Campus
               </p>
             </div>
-
           </div>
         </motion.div>
       </section>
@@ -527,7 +548,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Projects Section */}
+      {/* Dynamic Featured Projects Section (Sanity Integrated) */}
       <section id="projects" className="w-full py-16 md:py-20 lg:py-24 px-6 md:px-16 border-t border-neutral-900">
         <div className="w-full max-w-6xl mx-auto">
           <motion.div 
@@ -543,180 +564,80 @@ export default function Home() {
             <p className="text-neutral-400 text-sm sm:text-base">Custom mobile applications, management systems, and web platforms.</p>
           </motion.div>
 
-          {/* Software Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          {/* Dynamic Sanity Projects Grid */}
+          {projectsLoading ? (
+            <div className="flex justify-center items-center py-20 text-neutral-400 gap-3">
+              <Loader2 className="animate-spin" size={24} />
+              <span>Fetching projects from Sanity CMS...</span>
+            </div>
+          ) : projects.length === 0 ? (
+            <div className="text-center py-12 text-neutral-500">
+              No projects added yet in Sanity Studio.
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+              {projects.map((project) => (
+                <motion.div 
+                  key={project._id}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={fadeInUp}
+                  className="bg-neutral-950 border border-neutral-800/80 rounded-2xl overflow-hidden hover:border-neutral-700 transition duration-300 flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="w-full bg-neutral-900 relative border-b border-neutral-800/60 overflow-hidden aspect-[16/10] sm:aspect-[16/9] flex items-center justify-center">
+                      {project.image ? (
+                        <img 
+                          src={urlFor(project.image).url()} 
+                          alt={project.title} 
+                          className="w-full h-full object-cover object-top group-hover:scale-105 transition duration-500"
+                        />
+                      ) : project.imageUrl ? (
+                        <img 
+                          src={project.imageUrl} 
+                          alt={project.title} 
+                          className="w-full h-full object-cover object-top group-hover:scale-105 transition duration-500"
+                        />
+                      ) : (
+                        <Code2 size={40} className="text-neutral-600" />
+                      )}
+                    </div>
 
-            {/* Project 1 */}
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInUp}
-              className="bg-neutral-950 border border-neutral-800/80 rounded-2xl overflow-hidden hover:border-neutral-700 transition duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                <div className="w-full h-48 sm:h-56 bg-neutral-900/60 flex items-center justify-center p-6 relative border-b border-neutral-800/60">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-2xl p-3 shadow-xl flex items-center justify-center group-hover:scale-105 transition duration-500">
-                    <img 
-                      src="/projects/Drivers Help App Logo.png" 
-                      alt="Drivers Help App Logo" 
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                </div>
+                    <div className="p-6 md:p-7">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-[11px] font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800 px-3 py-1 rounded-full uppercase tracking-wider">
+                          {project.category || "Software"}
+                        </span>
+                        {project.projectLink && (
+                          <a href={project.projectLink} target="_blank" rel="noopener noreferrer">
+                            <ArrowUpRight size={18} className="text-neutral-500 hover:text-white transition" />
+                          </a>
+                        )}
+                      </div>
 
-                <div className="p-6 md:p-7">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800 px-3 py-1 rounded-full uppercase tracking-wider">
-                      App Development
-                    </span>
-                    <Smartphone size={18} className="text-neutral-500 group-hover:text-white transition" />
-                  </div>
-
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-neutral-200 transition">
-                    Drivers Help Mobile Application
-                  </h3>
-                  <p className="text-neutral-400 text-sm leading-relaxed mb-6">
-                    A dedicated mobile application solution designed to assist drivers with real-time support tools and operational assistance features.
-                  </p>
-                </div>
-              </div>
-
-              <div className="px-6 pb-6 md:px-7 md:pb-7">
-                <div className="flex flex-wrap gap-1.5 border-t border-neutral-900 pt-4">
-                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#AppDevelopment</span>
-                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#MobileUI</span>
-                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#DriverSolutions</span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Project 2 */}
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInUp}
-              className="bg-neutral-950 border border-neutral-800/80 rounded-2xl overflow-hidden hover:border-neutral-700 transition duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                <div className="w-full bg-neutral-900 relative border-b border-neutral-800/60 overflow-hidden aspect-[16/10] sm:aspect-[16/9]">
-                  <img 
-                    src="/projects/lopez tours.png" 
-                    alt="Lopez Tours Website Screenshot" 
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition duration-500"
-                  />
-                </div>
-
-                <div className="p-6 md:p-7">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800 px-3 py-1 rounded-full uppercase tracking-wider">
-                      WordPress Development
-                    </span>
-                    <Globe size={18} className="text-neutral-500 group-hover:text-white transition" />
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-neutral-200 transition">
+                        {project.title}
+                      </h3>
+                      <p className="text-neutral-400 text-sm leading-relaxed mb-6">
+                        {project.description}
+                      </p>
+                    </div>
                   </div>
 
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-neutral-200 transition">
-                    Lopez Tours Travel Platform
-                  </h3>
-                  <p className="text-neutral-400 text-sm leading-relaxed mb-6">
-                    A customized WordPress platform developed for Lopez Tours, featuring tailored layouts, travel packages, and brand content management.
-                  </p>
-                </div>
-              </div>
-
-              <div className="px-6 pb-6 md:px-7 md:pb-7">
-                <div className="flex flex-wrap gap-1.5 border-t border-neutral-900 pt-4">
-                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#WordPress</span>
-                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#TravelWeb</span>
-                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#CMS</span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Project 3: Library Management System */}
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInUp}
-              className="bg-neutral-950 border border-neutral-800/80 rounded-2xl overflow-hidden hover:border-neutral-700 transition duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                <div className="w-full h-48 sm:h-56 bg-neutral-900/60 flex items-center justify-center p-6 relative border-b border-neutral-800/60">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 bg-neutral-950 border border-neutral-800 rounded-2xl flex items-center justify-center text-white shadow-xl group-hover:scale-105 transition duration-500">
-                    <BookOpen size={40} className="text-neutral-300 group-hover:text-white transition" />
+                  <div className="px-6 pb-6 md:px-7 md:pb-7">
+                    <div className="flex flex-wrap gap-1.5 border-t border-neutral-900 pt-4">
+                      {project.tags?.map((tag, i) => (
+                        <span key={i} className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-
-                <div className="p-6 md:p-7">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800 px-3 py-1 rounded-full uppercase tracking-wider">
-                      Software System
-                    </span>
-                    <Code2 size={18} className="text-neutral-500 group-hover:text-white transition" />
-                  </div>
-
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-neutral-200 transition">
-                    Library Management System
-                  </h3>
-                  <p className="text-neutral-400 text-sm leading-relaxed mb-6">
-                    A comprehensive software system designed to automate library operations, book indexing, member tracking, and issue-return management.
-                  </p>
-                </div>
-              </div>
-
-              <div className="px-6 pb-6 md:px-7 md:pb-7">
-                <div className="flex flex-wrap gap-1.5 border-t border-neutral-900 pt-4">
-                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#SoftwareDev</span>
-                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#ManagementSystem</span>
-                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#Database</span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Project 4: Student Management System Web Application */}
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInUp}
-              className="bg-neutral-950 border border-neutral-800/80 rounded-2xl overflow-hidden hover:border-neutral-700 transition duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                <div className="w-full h-48 sm:h-56 bg-neutral-900/60 flex items-center justify-center p-6 relative border-b border-neutral-800/60">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 bg-neutral-950 border border-neutral-800 rounded-2xl flex items-center justify-center text-white shadow-xl group-hover:scale-105 transition duration-500">
-                    <Users size={40} className="text-neutral-300 group-hover:text-white transition" />
-                  </div>
-                </div>
-
-                <div className="p-6 md:p-7">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-semibold bg-neutral-900 text-neutral-300 border border-neutral-800 px-3 py-1 rounded-full uppercase tracking-wider">
-                      Web Application
-                    </span>
-                    <Globe size={18} className="text-neutral-500 group-hover:text-white transition" />
-                  </div>
-
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-neutral-200 transition">
-                    Student Management System Web App
-                  </h3>
-                  <p className="text-neutral-400 text-sm leading-relaxed mb-6">
-                    A web-based management platform built to streamline student enrollments, academic records tracking, and administrative data management.
-                  </p>
-                </div>
-              </div>
-
-              <div className="px-6 pb-6 md:px-7 md:pb-7">
-                <div className="flex flex-wrap gap-1.5 border-t border-neutral-900 pt-4">
-                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#WebApp</span>
-                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#StudentPortal</span>
-                  <span className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">#FullStack</span>
-                </div>
-              </div>
-            </motion.div>
-
-          </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
 
           {/* Media Banner */}
           <motion.div 
@@ -765,7 +686,6 @@ export default function Home() {
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-
             {/* Left: Contact Form */}
             <motion.form 
               initial="hidden"
@@ -861,7 +781,6 @@ export default function Home() {
               variants={fadeInUp}
               className="lg:col-span-5 flex flex-col justify-between gap-3"
             >
-              {/* WhatsApp Box */}
               <div className="p-5 bg-neutral-950 border border-neutral-800 rounded-2xl flex-1 flex flex-col justify-between">
                 <div>
                   <h3 className="text-sm font-bold text-white mb-1 flex items-center gap-2">
@@ -881,7 +800,6 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Email Box */}
               <div className="p-5 bg-neutral-950 border border-neutral-800 rounded-2xl flex-1 flex flex-col justify-center">
                 <h3 className="text-sm font-bold text-white mb-1 flex items-center gap-2">
                   <Mail size={16} className="text-neutral-300" /> Direct Email
@@ -892,7 +810,6 @@ export default function Home() {
                 </a>
               </div>
 
-              {/* Social Media Grid Box */}
               <div className="p-5 bg-neutral-950 border border-neutral-800 rounded-2xl flex-1 flex flex-col justify-center">
                 <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-2.5">Connect On Social Media</h3>
 
@@ -928,9 +845,7 @@ export default function Home() {
                   </a>
                 </div>
               </div>
-
             </motion.div>
-
           </div>
         </div>
       </section>
