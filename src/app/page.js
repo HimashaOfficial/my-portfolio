@@ -25,7 +25,7 @@ import {
   BookOpen,
   Users
 } from "lucide-react";
-import { client } from "@/sanity/lib/client"; // Sanity client import eka
+import { client, urlFor } from "./lib/sanity";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
