@@ -3,6 +3,11 @@ import "./globals.css";
 export const metadata = {
   title: "Himasha Keshana Rathnayaka | Portfolio",
   description: "Digital Creator & Tech Solutions Specialist",
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({ children }) {
