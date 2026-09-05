@@ -49,8 +49,9 @@ export default {
       of: [
         {
           type: 'object',
+          title: 'Brand Item',
           fields: [
-            { name: 'name', title: 'Brand Name', type: 'string' },
+            { name: 'brandName', title: 'Brand Name', type: 'string' },
             { name: 'role', title: 'Role / Designation', type: 'string' }
           ]
         }
@@ -65,12 +66,13 @@ export default {
       of: [
         {
           type: 'object',
+          title: 'Education Item',
           fields: [
             { name: 'badge', title: 'Badge Text (e.g. Present • Currently Reading / 2024 - 2025)', type: 'string' },
             { name: 'institutionTag', title: 'Institution Tag (e.g. UCSC, IMBS Campus)', type: 'string' },
-            { name: 'degreeTitle', title: 'Degree / Course Title', type: 'string' },
+            { name: 'degreeTitle', title: 'Degree / Qualification Title', type: 'string' },
             { name: 'instituteFullName', title: 'Institute Full Name', type: 'string' },
-            { name: 'isCurrent', title: 'Is Current / Highlighted?', type: 'boolean' }
+            { name: 'isCurrent', title: 'Is Current / Highlighted?', type: 'boolean', initialValue: false }
           ]
         }
       ]
@@ -84,10 +86,11 @@ export default {
       of: [
         {
           type: 'object',
+          title: 'Skill Item',
           fields: [
             { name: 'title', title: 'Skill Name', type: 'string' },
             { name: 'description', title: 'Skill Description', type: 'text' },
-            { name: 'iconName', title: 'Lucide Icon Name (e.g. Code2, Globe, Video)', type: 'string' }
+            { name: 'iconName', title: 'Lucide Icon Name (e.g. Code2, Smartphone, Globe, Palette, Video, Cpu)', type: 'string' }
           ]
         }
       ]
@@ -101,10 +104,11 @@ export default {
       of: [
         {
           type: 'object',
+          title: 'Service Item',
           fields: [
             { name: 'title', title: 'Service Name', type: 'string' },
             { name: 'description', title: 'Service Description', type: 'text' },
-            { name: 'iconName', title: 'Lucide Icon Name', type: 'string' }
+            { name: 'iconName', title: 'Lucide Icon Name (e.g. Code2, Globe, Palette, Clapperboard)', type: 'string' }
           ]
         }
       ]
@@ -118,19 +122,20 @@ export default {
       of: [
         {
           type: 'object',
+          title: 'Project Item',
           fields: [
             { name: 'title', title: 'Project Title', type: 'string' },
-            { name: 'category', title: 'Category Badge (e.g. App Development, WordPress)', type: 'string' },
+            { name: 'type', title: 'Category Badge (e.g. App Development, WordPress Development)', type: 'string' },
             { name: 'description', title: 'Project Description', type: 'text' },
             { name: 'image', title: 'Project Image / Logo', type: 'image', options: { hotspot: true } },
-            { name: 'iconName', title: 'Lucide Icon Name (if no image)', type: 'string' },
+            { name: 'iconType', title: 'Icon / Image Display Type (app, web, book, users)', type: 'string' },
             { name: 'tags', title: 'Tags List', type: 'array', of: [{ type: 'string' }] }
           ]
         }
       ]
     },
 
-    // ---------------- CONTACT INFORMATION ----------------
+    // ---------------- CONTACT & SOCIAL INFORMATION ----------------
     {
       name: 'whatsappNumber',
       title: 'WhatsApp Number (without + symbol)',
@@ -142,6 +147,19 @@ export default {
       title: 'Contact Email Address',
       type: 'string',
       initialValue: 'himashakeshana.official@gmail.com'
+    },
+    {
+      name: 'socialLinks',
+      title: 'Social Media Links',
+      type: 'object',
+      fields: [
+        { name: 'linkedin', title: 'LinkedIn URL', type: 'url' },
+        { name: 'github', title: 'GitHub URL', type: 'url' },
+        { name: 'facebook', title: 'Facebook URL', type: 'url' },
+        { name: 'instagram', title: 'Instagram URL', type: 'url' },
+        { name: 'youtube', title: 'YouTube URL', type: 'url' },
+        { name: 'tiktok', title: 'TikTok URL', type: 'url' }
+      ]
     }
   ]
 }
