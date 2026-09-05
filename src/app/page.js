@@ -90,16 +90,32 @@ const initialProjects = [
   }
 ];
 
+// Initial fallback brands
+const initialBrands = [
+  {
+    _id: "1",
+    brandName: "Virtmex",
+    role: "Founder & Managing Brand Lead"
+  },
+  {
+    _id: "2",
+    brandName: "VarixWare",
+    role: "Founder & Development Lead"
+  }
+];
+
 export default function Home() {
   const [activeSection, setActiveSection] = useState("hero");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [projects, setProjects] = useState(initialProjects);
+  const [brands, setBrands] = useState(initialBrands);
 
   // Dynamic Sanity GROQ Query sandaha fetch effect eka
   useEffect(() => {
-    const fetchProjects = async () => {
+    const fetchData = async () => {
       try {
-        const query = `*[_type == "project"] | order(_createdAt desc) {
+        // Fetch Projects
+        const projectQuery = `*[_type == "project"] | order(_createdAt desc) {
           _id,
           title,
           type,
@@ -108,16 +124,35 @@ export default function Home() {
           "image": image.asset->url,
           iconType
         }`;
-        const sanityData = await client.fetch(query);
-        if (sanityData && sanityData.length > 0) {
-          setProjects(sanityData);
+        const sanityProjects = await client.fetch(projectQuery);
+        if (sanityProjects && sanityProjects.length > 0) {
+          setProjects(sanityProjects);
+        }
+
+        // Fetch Dynamic Brands / Companies from Sanity (from "brand" schema or "portfolio" schema)
+        const brandQuery = `*[_type == "brand"] | order(_createdAt asc) {
+          _id,
+          brandName,
+          role
+        }`;
+        const sanityBrands = await client.fetch(brandQuery);
+
+        if (sanityBrands && sanityBrands.length > 0) {
+          setBrands(sanityBrands);
+        } else {
+          // Alternative check if brands are nested under portfolio document
+          const portfolioQuery = `*[_type == "portfolio"][0]{ brands[] { _id, brandName, role } }`;
+          const portfolioData = await client.fetch(portfolioQuery);
+          if (portfolioData?.brands && portfolioData.brands.length > 0) {
+            setBrands(portfolioData.brands);
+          }
         }
       } catch (error) {
         console.error("Sanity data fetching error:", error);
       }
     };
 
-    fetchProjects();
+    fetchData();
   }, []);
 
   // Form States connected to Resend Backend API
@@ -383,27 +418,19 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Brand Cards */}
+          {/* Dynamic Brand Cards from Sanity */}
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
-            <div className="p-5 bg-neutral-950 border border-neutral-800 rounded-xl flex items-center gap-4 hover:border-neutral-700 transition">
-              <div className="w-10 h-10 bg-neutral-900 border border-neutral-800 rounded-lg flex items-center justify-center shrink-0">
-                <Briefcase className="text-white" size={20} />
+            {brands.map((brand, idx) => (
+              <div key={brand._id || idx} className="p-5 bg-neutral-950 border border-neutral-800 rounded-xl flex items-center gap-4 hover:border-neutral-700 transition">
+                <div className="w-10 h-10 bg-neutral-900 border border-neutral-800 rounded-lg flex items-center justify-center shrink-0">
+                  <Briefcase className="text-white" size={20} />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold text-base">{brand.brandName}</h3>
+                  <p className="text-xs text-neutral-400">{brand.role}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-white font-bold text-base">Virtmex</h3>
-                <p className="text-xs text-neutral-400">Founder & Managing Brand Lead</p>
-              </div>
-            </div>
-
-            <div className="p-5 bg-neutral-950 border border-neutral-800 rounded-xl flex items-center gap-4 hover:border-neutral-700 transition">
-              <div className="w-10 h-10 bg-neutral-900 border border-neutral-800 rounded-lg flex items-center justify-center shrink-0">
-                <Briefcase className="text-white" size={20} />
-              </div>
-              <div>
-                <h3 className="text-white font-bold text-base">VarixWare</h3>
-                <p className="text-xs text-neutral-400">Founder & Development Lead</p>
-              </div>
-            </div>
+            ))}
           </div>
         </motion.div>
       </section>
