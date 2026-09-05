@@ -25,7 +25,7 @@ import {
   BookOpen,
   Users
 } from "lucide-react";
-import { client, urlFor } from "./lib/sanity";
+import { client, getPortfolioData, getProjects } from "./lib/sanity";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -50,7 +50,6 @@ const navItems = [
   { name: "Contact", href: "#contact" },
 ];
 
-// Sanity static fallback projects (Sanity eken data enakan sahathika vima sandaha)
 const initialProjects = [
   {
     _id: "1",
@@ -90,17 +89,39 @@ const initialProjects = [
   }
 ];
 
-// Initial fallback brands
 const initialBrands = [
+  { _id: "1", brandName: "Virtmex", role: "Founder & Managing Brand Lead" },
+  { _id: "2", brandName: "VarixWare", role: "Founder & Development Lead" }
+];
+
+const initialEducation = [
   {
-    _id: "1",
-    brandName: "Virtmex",
-    role: "Founder & Managing Brand Lead"
+    badge: "Present • Currently Reading",
+    institutionTag: "UCSC",
+    degreeTitle: "Bachelor of Information Technology (BIT)",
+    instituteFullName: "University of Colombo School of Computing (UCSC)",
+    isCurrent: true
   },
   {
-    _id: "2",
-    brandName: "VarixWare",
-    role: "Founder & Development Lead"
+    badge: "2024 - 2025",
+    institutionTag: "UCSC",
+    degreeTitle: "Foundation in Information Technology (FIT)",
+    instituteFullName: "University of Colombo School of Computing (UCSC)",
+    isCurrent: false
+  },
+  {
+    badge: "2024 - 2025",
+    institutionTag: "IMBS Campus",
+    degreeTitle: "Diploma in Information & Communication Technology",
+    instituteFullName: "IMBS Green Campus (1 Year Program)",
+    isCurrent: false
+  },
+  {
+    badge: "2024",
+    institutionTag: "CPS Campus",
+    degreeTitle: "Certificate in Graphic Designing",
+    instituteFullName: "College of Professional Studies Campus",
+    isCurrent: false
   }
 ];
 
@@ -109,43 +130,22 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [projects, setProjects] = useState(initialProjects);
   const [brands, setBrands] = useState(initialBrands);
+  const [education, setEducation] = useState(initialEducation);
+  const [portfolioData, setPortfolioData] = useState(null);
 
-  // Dynamic Sanity GROQ Query sandaha fetch effect eka
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch Projects
-        const projectQuery = `*[_type == "project"] | order(_createdAt desc) {
-          _id,
-          title,
-          type,
-          description,
-          tags,
-          "image": image.asset->url,
-          iconType
-        }`;
-        const sanityProjects = await client.fetch(projectQuery);
-        if (sanityProjects && sanityProjects.length > 0) {
-          setProjects(sanityProjects);
+        const sanityData = await getPortfolioData();
+        if (sanityData) {
+          setPortfolioData(sanityData);
+          if (sanityData.brands?.length > 0) setBrands(sanityData.brands);
+          if (sanityData.education?.length > 0) setEducation(sanityData.education);
         }
 
-        // Fetch Dynamic Brands / Companies from Sanity (from "brand" schema or "portfolio" schema)
-        const brandQuery = `*[_type == "brand"] | order(_createdAt asc) {
-          _id,
-          brandName,
-          role
-        }`;
-        const sanityBrands = await client.fetch(brandQuery);
-
-        if (sanityBrands && sanityBrands.length > 0) {
-          setBrands(sanityBrands);
-        } else {
-          // Alternative check if brands are nested under portfolio document
-          const portfolioQuery = `*[_type == "portfolio"][0]{ brands[] { _id, brandName, role } }`;
-          const portfolioData = await client.fetch(portfolioQuery);
-          if (portfolioData?.brands && portfolioData.brands.length > 0) {
-            setBrands(portfolioData.brands);
-          }
+        const sanityProjects = await getProjects();
+        if (sanityProjects && sanityProjects.length > 0) {
+          setProjects(sanityProjects);
         }
       } catch (error) {
         console.error("Sanity data fetching error:", error);
@@ -155,18 +155,11 @@ export default function Home() {
     fetchData();
   }, []);
 
-  // Form States connected to Resend Backend API
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    mobile: "",
-    message: ""
-  });
+  const [formData, setFormData] = useState({ name: "", email: "", mobile: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Auto detect active section on scroll
   useEffect(() => {
     const handleScroll = () => {
       const sections = navItems.map((item) => item.href.substring(1));
@@ -189,12 +182,10 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Form Input Change Handler
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Backend API Call on Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -203,9 +194,7 @@ export default function Home() {
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
@@ -226,7 +215,6 @@ export default function Home() {
     }
   };
 
-  // Fixed mobile navigation handler
   const handleMobileNavClick = (e, href) => {
     e.preventDefault();
     const targetId = href.substring(1);
@@ -238,10 +226,8 @@ export default function Home() {
       setTimeout(() => {
         const navHeight = 80;
         const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-        const offsetPosition = elementPosition - navHeight;
-
         window.scrollTo({
-          top: offsetPosition,
+          top: elementPosition - navHeight,
           behavior: "smooth"
         });
       }, 150);
@@ -347,20 +333,23 @@ export default function Home() {
           {/* Left Text Block */}
           <div className="w-full lg:col-span-7 text-center lg:text-left flex flex-col items-center lg:items-start">
             <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-neutral-900/90 text-neutral-300 border border-neutral-800 rounded-full text-xs font-medium tracking-wider uppercase mb-5">
-              <Sparkles size={14} className="text-neutral-400" /> Digital Creator & Developer
+              <Sparkles size={14} className="text-neutral-400" /> {portfolioData?.heroSubtitleBadge || "Digital Creator & Developer"}
             </span>
 
             <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold mb-4 text-white tracking-tight leading-tight w-full">
               Hi, I'm <br className="hidden sm:inline" />
-              <span>Himasha Keshana</span>{" "}
+              <span>{portfolioData?.heroTitleName || "Himasha Keshana Rathnayaka"}</span>{" "}
               <span className="inline-inline whitespace-nowrap">
-                <span>Rathnayaka</span>
                 <span className="inline-block ml-2 text-2xl sm:text-4xl md:text-5xl">👋</span>
               </span>
             </h1>
 
             <p className="text-neutral-400 text-sm sm:text-base md:text-lg mb-8 leading-relaxed w-full max-w-xl md:max-w-2xl lg:max-w-2xl mx-auto lg:mx-0">
-              Founder of <strong className="text-white">Virtmex</strong> and <strong className="text-white">VarixWare</strong>. Combining software engineering, WordPress development, graphic design, and video editing with AI-driven workflows to craft powerful digital solutions.
+              {portfolioData?.heroDescription || (
+                <>
+                  Founder of <strong className="text-white">Virtmex</strong> and <strong className="text-white">VarixWare</strong>. Combining software engineering, WordPress development, graphic design, and video editing with AI-driven workflows to craft powerful digital solutions.
+                </>
+              )}
             </p>
 
             <div className="grid grid-cols-2 sm:flex sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4 w-full sm:w-auto">
@@ -379,7 +368,7 @@ export default function Home() {
               <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-neutral-800 via-neutral-600 to-white/20 blur-2xl opacity-40 animate-pulse" />
               <div className="relative w-full h-full rounded-full p-1.5 bg-gradient-to-b from-neutral-700 via-neutral-900 to-black border border-neutral-800 shadow-2xl overflow-hidden flex items-center justify-center">
                 <img 
-                  src="/projects/myimage.png" 
+                  src={portfolioData?.profileImageUrl || "/projects/myimage.png"} 
                   alt="Himasha Keshana Rathnayaka" 
                   className="w-full h-full object-cover rounded-full hover:scale-105 transition duration-500"
                 />
@@ -398,7 +387,6 @@ export default function Home() {
           variants={fadeInUp}
           className="w-full max-w-4xl mx-auto"
         >
-          {/* Section Header */}
           <div className="text-center mb-10 md:mb-12">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-3 inline-flex items-center gap-2.5">
               <UserCheck className="text-neutral-400" size={28} /> About Me
@@ -408,13 +396,14 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Clean & Balanced Bio Text */}
           <div className="bg-neutral-950 border border-neutral-800/80 rounded-2xl p-6 sm:p-8 md:p-10 space-y-5 text-neutral-300 text-sm sm:text-base leading-relaxed text-left sm:text-center max-w-3xl mx-auto shadow-xl">
             <p className="tracking-normal">
-              I am an <strong className="text-white">Information Technology student</strong>, Digital Creator, and the Founder of <strong className="text-white">Virtmex</strong> and <strong className="text-white">VarixWare</strong>. My focus spans web engineering, custom software solutions, app development, and high-impact digital media.
+              {portfolioData?.aboutParagraph1 || (
+                <>I am an <strong className="text-white">Information Technology student</strong>, Digital Creator, and the Founder of <strong className="text-white">Virtmex</strong> and <strong className="text-white">VarixWare</strong>. My focus spans web engineering, custom software solutions, app development, and high-impact digital media.</>
+              )}
             </p>
             <p className="tracking-normal text-neutral-400">
-              By combining modern software architecture with intuitive UI design and AI-driven workflows, I craft scalable products tailored to solve real-world challenges with precision and speed.
+              {portfolioData?.aboutParagraph2 || "By combining modern software architecture with intuitive UI design and AI-driven workflows, I craft scalable products tailored to solve real-world challenges with precision and speed."}
             </p>
           </div>
 
@@ -435,7 +424,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Professional Education Section */}
+      {/* Dynamic Education Section */}
       <section id="education" className="w-full py-16 md:py-20 lg:py-24 px-6 md:px-16 border-t border-neutral-900">
         <motion.div 
           initial="hidden"
@@ -452,59 +441,19 @@ export default function Home() {
           </div>
 
           <div className="relative border-l border-neutral-800 ml-4 sm:ml-auto pl-6 sm:pl-8 space-y-8 max-w-3xl mx-auto">
-
-            {/* Degree */}
-            <div className="relative group">
-              <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 bg-white rounded-full border-4 border-black" />
-              <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                <span className="text-xs font-semibold uppercase tracking-wider text-green-400 bg-green-950/60 border border-green-800/60 px-3 py-0.5 rounded-full">Present • Currently Reading</span>
-                <span className="text-xs text-neutral-500 font-mono">UCSC</span>
+            {education.map((item, idx) => (
+              <div key={idx} className="relative group">
+                <div className={`absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-4 border-black ${item.isCurrent ? 'bg-white' : 'bg-neutral-600'}`} />
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+                  <span className={`text-xs font-semibold uppercase tracking-wider px-3 py-0.5 rounded-full ${item.isCurrent ? 'text-green-400 bg-green-950/60 border border-green-800/60' : 'text-neutral-400'}`}>
+                    {item.badge}
+                  </span>
+                  <span className="text-xs text-neutral-500 font-mono">{item.institutionTag}</span>
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-1">{item.degreeTitle}</h3>
+                <p className="text-neutral-400 text-sm leading-relaxed">{item.instituteFullName}</p>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-1">Bachelor of Information Technology (BIT)</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">
-                University of Colombo School of Computing (UCSC)
-              </p>
-            </div>
-
-            {/* Foundation */}
-            <div className="relative group">
-              <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 bg-neutral-600 rounded-full border-4 border-black" />
-              <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">2024 - 2025</span>
-                <span className="text-xs text-neutral-500 font-mono">UCSC</span>
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-1">Foundation in Information Technology (FIT)</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">
-                University of Colombo School of Computing (UCSC)
-              </p>
-            </div>
-
-            {/* ICT Diploma */}
-            <div className="relative group">
-              <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 bg-neutral-600 rounded-full border-4 border-black" />
-              <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">2024 - 2025</span>
-                <span className="text-xs text-neutral-500 font-mono">IMBS Campus</span>
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-1">Diploma in Information & Communication Technology</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">
-                IMBS Green Campus (1 Year Program)
-              </p>
-            </div>
-
-            {/* Certificate */}
-            <div className="relative group">
-              <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 bg-neutral-600 rounded-full border-4 border-black" />
-              <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-                <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">2024</span>
-                <span className="text-xs text-neutral-500 font-mono">CPS Campus</span>
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-1">Certificate in Graphic Designing</h3>
-              <p className="text-neutral-400 text-sm leading-relaxed">
-                College of Professional Studies Campus
-              </p>
-            </div>
-
+            ))}
           </div>
         </motion.div>
       </section>
@@ -621,7 +570,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Projects Section (Dynamic Sanity Fetch integration) */}
+      {/* Featured Projects Section */}
       <section id="projects" className="w-full py-16 md:py-20 lg:py-24 px-6 md:px-16 border-t border-neutral-900">
         <div className="w-full max-w-6xl mx-auto">
           <motion.div 
@@ -870,7 +819,7 @@ export default function Home() {
                 </div>
                 <div>
                   <a 
-                    href="https://wa.me/94750434734" 
+                    href={`https://wa.me/${portfolioData?.whatsappNumber || "94750434734"}`}
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-white rounded-lg text-xs font-semibold transition"
@@ -886,8 +835,8 @@ export default function Home() {
                   <Mail size={16} className="text-neutral-300" /> Direct Email
                 </h3>
                 <p className="text-neutral-400 text-xs mb-0.5">Send your requirements or questions to:</p>
-                <a href="mailto:himashakeshana.official@gmail.com" className="text-neutral-200 hover:text-white font-medium text-xs transition">
-                  himashakeshana.official@gmail.com
+                <a href={`mailto:${portfolioData?.emailAddress || "himashakeshana.official@gmail.com"}`} className="text-neutral-200 hover:text-white font-medium text-xs transition">
+                  {portfolioData?.emailAddress || "himashakeshana.official@gmail.com"}
                 </a>
               </div>
 
@@ -896,32 +845,32 @@ export default function Home() {
                 <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-2.5">Connect On Social Media</h3>
 
                 <div className="grid grid-cols-2 gap-2">
-                  <a href="https://www.linkedin.com/in/himasha-rathnayaka-4328493a8" target="_blank" rel="noopener noreferrer" className="p-2 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800/80 rounded-lg flex items-center gap-2 text-xs text-neutral-300 hover:text-white transition">
+                  <a href={portfolioData?.socialLinks?.linkedin || "https://www.linkedin.com/in/himasha-rathnayaka-4328493a8"} target="_blank" rel="noopener noreferrer" className="p-2 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800/80 rounded-lg flex items-center gap-2 text-xs text-neutral-300 hover:text-white transition">
                     <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
                     LinkedIn
                   </a>
 
-                  <a href="https://github.com/HimashaOfficial" target="_blank" rel="noopener noreferrer" className="p-2 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800/80 rounded-lg flex items-center gap-2 text-xs text-neutral-300 hover:text-white transition">
+                  <a href={portfolioData?.socialLinks?.github || "https://github.com/HimashaOfficial"} target="_blank" rel="noopener noreferrer" className="p-2 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800/80 rounded-lg flex items-center gap-2 text-xs text-neutral-300 hover:text-white transition">
                     <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
                     GitHub
                   </a>
 
-                  <a href="https://www.facebook.com/share/1DnuG4k5U5/" target="_blank" rel="noopener noreferrer" className="p-2 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800/80 rounded-lg flex items-center gap-2 text-xs text-neutral-300 hover:text-white transition">
+                  <a href={portfolioData?.socialLinks?.facebook || "https://www.facebook.com/share/1DnuG4k5U5/"} target="_blank" rel="noopener noreferrer" className="p-2 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800/80 rounded-lg flex items-center gap-2 text-xs text-neutral-300 hover:text-white transition">
                     <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H7.5v-3H10V9.69c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 3h-2.33v6.8c4.56-.93 8-4.96 8-9.8z"/></svg>
                     Facebook
                   </a>
 
-                  <a href="https://www.instagram.com/himasha_keshana" target="_blank" rel="noopener noreferrer" className="p-2 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800/80 rounded-lg flex items-center gap-2 text-xs text-neutral-300 hover:text-white transition">
+                  <a href={portfolioData?.socialLinks?.instagram || "https://www.instagram.com/himasha_keshana"} target="_blank" rel="noopener noreferrer" className="p-2 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800/80 rounded-lg flex items-center gap-2 text-xs text-neutral-300 hover:text-white transition">
                     <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                     Instagram
                   </a>
 
-                  <a href="https://youtube.com/@himashakeshana" target="_blank" rel="noopener noreferrer" className="p-2 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800/80 rounded-lg flex items-center gap-2 text-xs text-neutral-300 hover:text-white transition">
+                  <a href={portfolioData?.socialLinks?.youtube || "https://youtube.com/@himashakeshana"} target="_blank" rel="noopener noreferrer" className="p-2 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800/80 rounded-lg flex items-center gap-2 text-xs text-neutral-300 hover:text-white transition">
                     <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                     YouTube
                   </a>
 
-                  <a href="https://www.tiktok.com/@himashakeshana" target="_blank" rel="noopener noreferrer" className="p-2 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800/80 rounded-lg flex items-center gap-2 text-xs text-neutral-300 hover:text-white transition">
+                  <a href={portfolioData?.socialLinks?.tiktok || "https://www.tiktok.com/@himashakeshana"} target="_blank" rel="noopener noreferrer" className="p-2 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800/80 rounded-lg flex items-center gap-2 text-xs text-neutral-300 hover:text-white transition">
                     <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-1-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.82.56-1.33 1.52-1.33 2.52.01 1.01.55 1.96 1.39 2.51.87.58 2 .62 2.92.13.83-.43 1.41-1.28 1.52-2.22.03-2.31.02-4.63.02-6.95 0-3.37-.01-6.74.01-10.11z"/></svg>
                     TikTok
                   </a>

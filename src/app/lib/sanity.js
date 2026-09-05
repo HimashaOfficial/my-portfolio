@@ -5,7 +5,7 @@ export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
   apiVersion: '2024-01-01',
-  useCdn: false, // Live update වීම සඳහා CDN Disable කර ඇත
+  useCdn: false,
 })
 
 const builder = imageUrlBuilder(client)
@@ -15,7 +15,7 @@ export function urlFor(source) {
   return builder.image(source)
 }
 
-// Full Portfolio Data Query from Single Sanity Document
+// Portfolio Full Data Query
 export async function getPortfolioData() {
   const query = `*[_type == "portfolio"][0] {
     heroSubtitleBadge,
@@ -25,6 +25,7 @@ export async function getPortfolioData() {
     aboutParagraph1,
     aboutParagraph2,
     brands[] {
+      _id,
       brandName,
       role
     },
@@ -52,7 +53,7 @@ export async function getPortfolioData() {
   return await client.fetch(query)
 }
 
-// Fetch Software Projects
+// Software Projects Query
 export async function getProjects() {
   const query = `*[_type == "project"] | order(_createdAt desc) {
     _id,
