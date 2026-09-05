@@ -335,9 +335,6 @@ export default function Home() {
             <h1 className="text-3xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold mb-4 text-white tracking-tight leading-tight w-full">
               Hi, I'm <br className="hidden sm:inline" />
               <span>{portfolioData?.heroTitleName || "Himasha Keshana Rathnayaka"}</span>{" "}
-              <span className="inline-inline whitespace-nowrap">
-                <span className="inline-block ml-2 text-2xl sm:text-4xl md:text-5xl">👋</span>
-              </span>
             </h1>
 
             <p className="text-neutral-400 text-sm sm:text-base md:text-lg mb-8 leading-relaxed w-full max-w-xl md:max-w-2xl lg:max-w-2xl mx-auto lg:mx-0">
