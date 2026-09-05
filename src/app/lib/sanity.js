@@ -15,7 +15,7 @@ export function urlFor(source) {
   return builder.image(source)
 }
 
-// Portfolio Full Data Query
+// Portfolio Full Data Query (Including Projects Array)
 export async function getPortfolioData() {
   const query = `*[_type == "portfolio"][0] {
     heroSubtitleBadge,
@@ -25,11 +25,12 @@ export async function getPortfolioData() {
     aboutParagraph1,
     aboutParagraph2,
     brands[] {
-      _id,
+      _key,
       brandName,
       role
     },
     education[] {
+      _key,
       badge,
       institutionTag,
       degreeTitle,
@@ -37,32 +38,29 @@ export async function getPortfolioData() {
       isCurrent
     },
     skills[] {
+      _key,
       title,
       description,
       iconName
     },
     services[] {
+      _key,
       title,
       description,
       iconName
     },
+    projects[] {
+      _key,
+      title,
+      type,
+      description,
+      tags,
+      "image": image.asset->url,
+      iconType
+    },
     whatsappNumber,
     emailAddress,
     socialLinks
-  }`
-  return await client.fetch(query)
-}
-
-// Software Projects Query
-export async function getProjects() {
-  const query = `*[_type == "project"] | order(_createdAt desc) {
-    _id,
-    title,
-    type,
-    description,
-    tags,
-    "image": image.asset->url,
-    iconType
   }`
   return await client.fetch(query)
 }

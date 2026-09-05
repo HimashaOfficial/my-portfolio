@@ -25,7 +25,7 @@ import {
   BookOpen,
   Users
 } from "lucide-react";
-import { client, getPortfolioData, getProjects } from "./lib/sanity";
+import { getPortfolioData } from "./lib/sanity";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -52,7 +52,7 @@ const navItems = [
 
 const initialProjects = [
   {
-    _id: "1",
+    _key: "1",
     title: "Drivers Help Mobile Application",
     type: "App Development",
     description: "A dedicated mobile application solution designed to assist drivers with real-time support tools and operational assistance features.",
@@ -61,7 +61,7 @@ const initialProjects = [
     iconType: "app"
   },
   {
-    _id: "2",
+    _key: "2",
     title: "Lopez Tours Travel Platform",
     type: "WordPress Development",
     description: "A customized WordPress platform developed for Lopez Tours, featuring tailored layouts, travel packages, and brand content management.",
@@ -70,7 +70,7 @@ const initialProjects = [
     iconType: "web"
   },
   {
-    _id: "3",
+    _key: "3",
     title: "Library Management System",
     type: "Software System",
     description: "A comprehensive software system designed to automate library operations, book indexing, member tracking, and issue-return management.",
@@ -79,7 +79,7 @@ const initialProjects = [
     iconType: "book"
   },
   {
-    _id: "4",
+    _key: "4",
     title: "Student Management System Web App",
     type: "Web Application",
     description: "A web-based management platform built to streamline student enrollments, academic records tracking, and administrative data management.",
@@ -90,8 +90,8 @@ const initialProjects = [
 ];
 
 const initialBrands = [
-  { _id: "1", brandName: "Virtmex", role: "Founder & Managing Brand Lead" },
-  { _id: "2", brandName: "VarixWare", role: "Founder & Development Lead" }
+  { _key: "1", brandName: "Virtmex", role: "Founder & Managing Brand Lead" },
+  { _key: "2", brandName: "VarixWare", role: "Founder & Development Lead" }
 ];
 
 const initialEducation = [
@@ -141,11 +141,7 @@ export default function Home() {
           setPortfolioData(sanityData);
           if (sanityData.brands?.length > 0) setBrands(sanityData.brands);
           if (sanityData.education?.length > 0) setEducation(sanityData.education);
-        }
-
-        const sanityProjects = await getProjects();
-        if (sanityProjects && sanityProjects.length > 0) {
-          setProjects(sanityProjects);
+          if (sanityData.projects?.length > 0) setProjects(sanityData.projects);
         }
       } catch (error) {
         console.error("Sanity data fetching error:", error);
@@ -410,7 +406,7 @@ export default function Home() {
           {/* Dynamic Brand Cards from Sanity */}
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
             {brands.map((brand, idx) => (
-              <div key={brand._id || idx} className="p-5 bg-neutral-950 border border-neutral-800 rounded-xl flex items-center gap-4 hover:border-neutral-700 transition">
+              <div key={brand._key || idx} className="p-5 bg-neutral-950 border border-neutral-800 rounded-xl flex items-center gap-4 hover:border-neutral-700 transition">
                 <div className="w-10 h-10 bg-neutral-900 border border-neutral-800 rounded-lg flex items-center justify-center shrink-0">
                   <Briefcase className="text-white" size={20} />
                 </div>
@@ -442,7 +438,7 @@ export default function Home() {
 
           <div className="relative border-l border-neutral-800 ml-4 sm:ml-auto pl-6 sm:pl-8 space-y-8 max-w-3xl mx-auto">
             {education.map((item, idx) => (
-              <div key={idx} className="relative group">
+              <div key={item._key || idx} className="relative group">
                 <div className={`absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-4 border-black ${item.isCurrent ? 'bg-white' : 'bg-neutral-600'}`} />
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
                   <span className={`text-xs font-semibold uppercase tracking-wider px-3 py-0.5 rounded-full ${item.isCurrent ? 'text-green-400 bg-green-950/60 border border-green-800/60' : 'text-neutral-400'}`}>
@@ -588,9 +584,9 @@ export default function Home() {
 
           {/* Dynamic Sanity Projects Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            {projects.map((project) => (
+            {projects.map((project, idx) => (
               <motion.div 
-                key={project._id}
+                key={project._key || idx}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
@@ -655,8 +651,8 @@ export default function Home() {
 
                 <div className="px-6 pb-6 md:px-7 md:pb-7">
                   <div className="flex flex-wrap gap-1.5 border-t border-neutral-900 pt-4">
-                    {project.tags && project.tags.map((tag, idx) => (
-                      <span key={idx} className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">
+                    {project.tags && project.tags.map((tag, tagIdx) => (
+                      <span key={tagIdx} className="text-[11px] text-neutral-500 bg-neutral-900 px-2.5 py-1 rounded">
                         {tag}
                       </span>
                     ))}

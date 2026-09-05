@@ -114,6 +114,49 @@ export default {
       ]
     },
 
+    // ---------------- PROJECTS SECTION ----------------
+    {
+      name: 'projects',
+      title: 'Featured Projects',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          title: 'Project Item',
+          fields: [
+            { name: 'title', title: 'Project Title', type: 'string' },
+            { name: 'type', title: 'Project Category / Type (e.g. App Development, WordPress)', type: 'string' },
+            { name: 'description', title: 'Project Description', type: 'text' },
+            { 
+              name: 'tags', 
+              title: 'Tags', 
+              type: 'array', 
+              of: [{ type: 'string' }] 
+            },
+            { 
+              name: 'image', 
+              title: 'Project Image / Logo', 
+              type: 'image', 
+              options: { hotspot: true } 
+            },
+            { 
+              name: 'iconType', 
+              title: 'Icon / Layout Type', 
+              type: 'string',
+              options: {
+                list: [
+                  { title: 'App Icon (Centered)', value: 'app' },
+                  { title: 'Web Preview Icon', value: 'web' },
+                  { title: 'Users Icon (Default Placeholder)', value: 'users' },
+                  { title: 'Book / System Icon (Default Placeholder)', value: 'book' }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+
     // ---------------- CONTACT & SOCIAL INFORMATION ----------------
     {
       name: 'whatsappNumber',
