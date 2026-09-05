@@ -90,7 +90,7 @@ export default {
           fields: [
             { name: 'title', title: 'Skill Name', type: 'string' },
             { name: 'description', title: 'Skill Description', type: 'text' },
-            { name: 'iconName', title: 'Lucide Icon Name (e.g. Code2, Smartphone, Globe, Palette, Video, Cpu)', type: 'string' }
+            { name: 'iconName', title: 'Icon Name (e.g. Code2, Smartphone, Globe, Palette, Video, Cpu)', type: 'string' }
           ]
         }
       ]
@@ -108,28 +108,7 @@ export default {
           fields: [
             { name: 'title', title: 'Service Name', type: 'string' },
             { name: 'description', title: 'Service Description', type: 'text' },
-            { name: 'iconName', title: 'Lucide Icon Name (e.g. Code2, Globe, Palette, Clapperboard)', type: 'string' }
-          ]
-        }
-      ]
-    },
-
-    // ---------------- FEATURED PROJECTS SECTION ----------------
-    {
-      name: 'projects',
-      title: 'Featured Software Projects',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          title: 'Project Item',
-          fields: [
-            { name: 'title', title: 'Project Title', type: 'string' },
-            { name: 'type', title: 'Category Badge (e.g. App Development, WordPress Development)', type: 'string' },
-            { name: 'description', title: 'Project Description', type: 'text' },
-            { name: 'image', title: 'Project Image / Logo', type: 'image', options: { hotspot: true } },
-            { name: 'iconType', title: 'Icon / Image Display Type (app, web, book, users)', type: 'string' },
-            { name: 'tags', title: 'Tags List', type: 'array', of: [{ type: 'string' }] }
+            { name: 'iconName', title: 'Icon Name (e.g. Code2, Globe, Palette, Clapperboard)', type: 'string' }
           ]
         }
       ]
